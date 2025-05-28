@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/log-in.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Iniciar sesión | Aloja</title>
+  </head>
+  <body>
+    <div class="nav__logo" onclick="window.open('../index.php', '_self')">
+      <img src="../img/logo.png" alt="logo" />
+    </div>
+    <nav class="navigation">
+    </nav>
+    <nav class="second-nav">
+    </nav>
+    <section>
+      <form action="../php/login.php" method="post">
+          <h1>Iniciar sesión</h1>
+          <div class="inputbox">
+              <ion-icon name="person-outline"></ion-icon>
+              <input type="text" name="user" id="user" required>
+              <label for="user">Usuario</label>
+          </div>
+          <div class="inputbox position-relative">
+            <ion-icon name="lock-closed-outline" style="color: white;"></ion-icon>
+            <input type="password" name="password" id="password" required style="padding-right: 2.5rem; width: calc(100% - 35px);">
+            <label for="password">Contraseña</label>
+            <i class="fa-solid fa-eye-slash toggle-password" id="togglePassword" 
+               style="position: absolute; right: 40px; top: 50%; transform: translateY(-50%); cursor: pointer; color: white;"></i>
+          </div>                  
+          <button>Iniciar sesión</button>
+      </form>
+    </section>
+    <script>
+      const togglePassword = document.getElementById('togglePassword');
+      const password = document.getElementById('password');
+    
+      togglePassword.addEventListener('click', function () {
+        const isPassword = password.type === 'password';
+        password.type = isPassword ? 'text' : 'password';
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+    </script>    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="../js/sing-up-in.js"></script>
+  </body>
+</html>
