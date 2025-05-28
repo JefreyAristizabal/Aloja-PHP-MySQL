@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="estilo.css" >
+    <title>Panel de Administrador - Sistema de Reservas</title>
+    <!-- Font Awesome CDN Link for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Sistema de Reservas</h2>
+                <p>Panel de Administrador</p>
+            </div>
+            <nav class="sidebar-menu">
+                <div class="menu-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Reservas</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Disponibilidad</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Gestión de Reservas</h1>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" id="new-reservation-btn">
+                        <i class="fas fa-plus"></i> Nueva Reserva
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Dashboard Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card primary">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>156</h3>
+                    <p>Reservas Activas</p>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>83%</h3>
+                    <p>Tasa de Ocupación</p>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <h3>24</h3>
+                    <p>Reservas Pendientes</p>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <h3>12</h3>
+                    <p>Cancelaciones</p>
+                </div>
+            </div>
+            
+            <!-- Reservations Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">Listado de Reservas</div>
+                    <div class="table-actions">
+                        <button class="btn btn-light btn-sm">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                        <button class="btn btn-light btn-sm">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#RES-001</td>
+                            <td>Juan Pérez</td>
+                            <td>05/03/2025</td>
+                            <td>10/03/2025</td>
+                            <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                            <td class="actions-cell">
+                                <button class="btn btn-primary btn-sm edit-reservation" data-id="RES-001">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-reservation" data-id="RES-001">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#RES-002</td>
+                            <td>María González</td>
+                            <td>07/03/2025</td>
+                            <td>15/03/2025</td>
+                            <td><span class="status-badge status-pending">Pendiente</span></td>
+                            <td class="actions-cell">
+                                <button class="btn btn-primary btn-sm edit-reservation" data-id="RES-002">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-reservation" data-id="RES-002">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#RES-003</td>
+                            <td>Carlos Rodríguez</td>
+                            <td>02/03/2025</td>
+                            <td>04/03/2025</td>
+                            <td><span class="status-badge status-complete">Completada</span></td>
+                            <td class="actions-cell">
+                                <button class="btn btn-primary btn-sm edit-reservation" data-id="RES-003">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-reservation" data-id="RES-003">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#RES-004</td>
+                            <td>Ana Martínez</td>
+                            <td>10/03/2025</td>
+                            <td>12/03/2025</td>
+                            <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                            <td class="actions-cell">
+                                <button class="btn btn-primary btn-sm edit-reservation" data-id="RES-004">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-reservation" data-id="RES-004">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#RES-005</td>
+                            <td>Pedro Sánchez</td>
+                            <td>15/03/2025</td>
+                            <td>20/03/2025</td>
+                            <td><span class="status-badge status-cancelled">Cancelada</span></td>
+                            <td class="actions-cell">
+                                <button class="btn btn-primary btn-sm edit-reservation" data-id="RES-005">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-reservation" data-id="RES-005">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Create Reservation Modal -->
+    <div class="modal-backdrop" id="new-reservation-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Nueva Reserva</div>
+                <button class="modal-close" id="close-new-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="new-reservation-form">
+                    <div class="form-group">
+                        <label for="client">Cliente</label>
+                        <select class="form-control" id="client" required>
+                            <option value="">Seleccionar cliente</option>
+                            <option value="1">Juan Pérez</option>
+                            <option value="2">María González</option>
+                            <option value="3">Carlos Rodríguez</option>
+                            <option value="4">Ana Martínez</option>
+                            <option value="5">Pedro Sánchez</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start-date">Fecha Inicio</label>
+                            <input type="date" class="form-control" id="start-date" required min="2025-03-05">
+                            <div class="validation-error" id="start-date-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">Fecha Fin</label>
+                            <input type="date" class="form-control" id="end-date" required min="2025-03-06">
+                            <div class="validation-error" id="end-date-error"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="resource">Recurso</label>
+                        <select class="form-control" id="resource" required>
+                            <option value="">Seleccionar recurso</option>
+                            <option value="1">Habitación 101</option>
+                            <option value="2">Habitación 102</option>
+                            <option value="3">Habitación 103</option>
+                            <option value="4">Sala de Conferencias</option>
+                            <option value="5">Salón de Eventos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Disponibilidad:</label>
+                        <div class="calendar-header">
+                            <div>Dom</div>
+                            <div>Lun</div>
+                            <div>Mar</div>
+                            <div>Mié</div>
+                            <div>Jue</div>
+                            <div>Vie</div>
+                            <div>Sáb</div>
+                        </div>
+                        <div class="calendar">
+                            <div class="calendar-day disabled">
+                                <div class="day-number">28</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">1</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">2</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">3</div>
+                                <div class="availability">75%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">4</div>
+                                <div class="availability">50%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">5</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">6</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            
+                            <div class="calendar-day available">
+                                <div class="day-number">7</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">8</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">9</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day reserved">
+                                <div class="day-number">10</div>
+                                <div class="availability">0%</div>
+                            </div>
+                            <div class="calendar-day reserved">
+                                <div class="day-number">11</div>
+                                <div class="availability">0%</div>
+                            </div>
+                            <div class="calendar-day reserved">
+                                <div class="day-number">12</div>
+                                <div class="availability">25%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">13</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            
+                            <div class="calendar-day available">
+                                <div class="day-number">14</div>
+                                <div class="availability">75%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">15</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">16</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">17</div>
+                                <div class="availability">50%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">18</div>
+                                <div class="availability">100%</div>
+                            </div>
+                            <div class="calendar-day available">
+                                <div class="day-number">19</div
