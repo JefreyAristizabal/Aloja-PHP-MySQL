@@ -134,7 +134,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link9">
+                    <a href="?section=agregar_estadia" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Estadía</span>
                     </a>
@@ -159,7 +159,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-2">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link3">
+                    <a href="?section=tabla_huesped" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -167,7 +167,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link10">
+                    <a href="?section=agregar_huesped" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Huesped</span>
                     </a>
@@ -192,7 +192,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-7">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link4">
+                    <a href="?section=tabla_huespedxestadia" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -200,7 +200,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link21">
+                    <a href="?section=agregar_huespedxestadia" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Huesped x Estadía</span>
                     </a>
@@ -258,7 +258,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-4">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link6">
+                    <a href="?section=tabla_habitacion" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -266,7 +266,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link12">
+                    <a href="?section=agregar_habitacion" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Habitación</span>
                     </a>
@@ -291,7 +291,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-5">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link7">
+                    <a href="?section=tabla_tarifa" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -299,7 +299,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link13">
+                    <a href="?section=agregar_tarifa" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Tarifa</span>
                     </a>
@@ -357,7 +357,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-8">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link23">
+                    <a href="?section=tabla_novedad" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -365,7 +365,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link24">
+                    <a href="?section=agregar_novedad" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Novedad</span>
                     </a>

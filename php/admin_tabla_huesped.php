@@ -40,7 +40,7 @@ $res2 = $conn->query($sql2);
                          <td><?=  $row['idHUESPED']?></td>
                          <td><?= $row['Nombre_completo']?></td>
                          <td><?= $row['tipo_documento']?></td>
-                         <td><?= $row['Numero_documento']?></td>
+                         <td><?= $row['numero_documento']?></td>
                          <td><?= $row['Telefono_huesped']?></td>
                          <td><?= $row['Origen']?></td>
                          <td><?= $row['Nombre_Contacto']?></td>
@@ -49,7 +49,7 @@ $res2 = $conn->query($sql2);
                          <td><?= $row['observaciones2']?></td>
                          <div class="d-flex justify-content-center gap-1">
                              <td class="text-center">
-                             <a href="#" class="btn btn-success btn-editar-huesped" data-id="<?= $row['idHUESPED'] ?>">Editar</a>
+                             <a href="?section=editar_huesped&id=<?= $row['idHUESPED'] ?>" class="btn btn-success">Editar</a>
                              <a class="btn btn-danger" href="#" onclick="confirmarEliminacion(<?= ($row['idHUESPED']) ?>)">Eliminar</a>
                              </td>
                          </div>                        
@@ -72,32 +72,6 @@ $res2 = $conn->query($sql2);
                 </tr>
               </tfoot>
             </table>
-            <script>
-            $(document).ready(function () {
-              $(document).on('click', '.btn-editar-huesped', function (e) {
-                e.preventDefault();
-              
-                const idHuesped = $(this).data('id');
-              
-                const $contenedor16 = $('#container16');
-              
-                $contenedor16.removeClass('d-none').addClass('d-block');
-              
-                for (let i = 1; i <= 25; i++) {
-                  if (i !== 16) {
-                    $('#container' + i).removeClass('d-block').addClass('d-none');
-                  }
-                }
-              
-                $contenedor16.load(`contenido16.php?id=${idHuesped}`, function(response, status, xhr) {
-                  if (status === "error") {
-                    console.error("Error al cargar contenido16.php:", xhr.status, xhr.statusText);
-                    alert("Hubo un error al cargar el contenido.");
-                  }
-                });
-              });
-            });
-            </script>
             <script>
                 function confirmarEliminacion(id) {
                   Swal.fire({

@@ -23,7 +23,7 @@
                 echo "No se ha proporcionado un ID de novedad.";
             }
           ?>
-          <h2>Editar Tarifa</h2>
+          <h2>Editar Novedad</h2>
           <form action="actualizar_novedad.php" method="post" enctype="multipart/form-data">        
             <input type="hidden" name="id" value="<?= $novedad['idNovedades']?>">
             <div class="input-group mb-3">

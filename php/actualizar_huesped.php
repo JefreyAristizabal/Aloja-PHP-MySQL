@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $observaciones_huesped = $_POST['observaciones_huesped'];
     $otras_observaciones_huesped = $_POST['otras_observaciones_huesped'];
 
-    $sql = "UPDATE huesped SET Nombre_completo = ?, tipo_documento = ?, Numero_documento = ?, Telefono_huesped = ?, Origen = ?, Nombre_Contacto = ?, Telefono_contacto = ?, Observaciones = ?, observaciones2 = ? WHERE idHUESPED = ?";
+    $sql = "UPDATE huesped SET Nombre_completo = ?, tipo_documento = ?, numero_documento = ?, Telefono_huesped = ?, Origen = ?, Nombre_Contacto = ?, Telefono_contacto = ?, Observaciones = ?, observaciones2 = ? WHERE idHUESPED = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssssssi", $nombre_huesped, $tipodocumento, $numero_documento_huesped, $telefono_huesped, $ciudad_huesped, $nombre_contacto_huesped, $telefono_contacto_huesped, $observaciones_huesped, $otras_observaciones_huesped, $id);
 

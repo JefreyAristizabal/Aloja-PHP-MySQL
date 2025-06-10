@@ -40,7 +40,7 @@ $res5 = $conn->query($sql5);
                          <td><?= $row['IMAGEN']?></td>
                          <div class="d-flex justify-content-center gap-1">
                              <td class="text-center ">
-                             <a href="#" class="btn btn-success btn-editar-habitacion" data-id="<?= $row['idHABITACION'] ?>">Editar</a>
+                             <a href="?section=editar_habitacion&id=<?= $row['idHABITACION'] ?>" class="btn btn-success">Editar</a>
                              <a class="btn btn-danger" href="#" onclick="confirmarEliminacion(<?= ($row['idHABITACION']) ?>)">Eliminar</a>
                              </td>
                          </div>                        
@@ -59,27 +59,6 @@ $res5 = $conn->query($sql5);
                 </tr>
               </tfoot>
             </table>
-            <script>
-                $(document).ready(function () {
-                  $(document).on('click', '.btn-editar-habitacion', function (e) {
-                    e.preventDefault();
-
-                    const idHabitacion = $(this).data('id');
-
-                    const $contenedor18 = $('#container18');
-
-                    $contenedor18.removeClass('d-none').addClass('d-block');
-
-                    for (let i = 1; i <= 25; i++) {
-                      if (i !== 18) {
-                        $('#container' + i).removeClass('d-block').addClass('d-none');
-                      }
-                    }
-                
-                    $contenedor18.load(`contenido18.php?id=${idHabitacion}`);
-                  });
-                });
-            </script>
             <script>
                 function confirmarEliminacion(id) {
                   Swal.fire({

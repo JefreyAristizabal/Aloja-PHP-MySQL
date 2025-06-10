@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $observaciones_huesped = $_POST['observaciones_huesped'];
     $otras_observaciones_huesped = $_POST['otras_observaciones_huesped'];
 
-    $sql = "INSERT INTO huesped (Nombre_completo, tipo_documento, Numero_documento, Telefono_huesped, Origen, Nombre_Contacto, Telefono_contacto, Observaciones, observaciones2)
+    $sql = "INSERT INTO huesped (Nombre_completo, tipo_documento, numero_documento, Telefono_huesped, Origen, Nombre_Contacto, Telefono_contacto, Observaciones, observaciones2)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);

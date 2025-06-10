@@ -40,7 +40,7 @@ $res6 = $conn->query($sql6);
                          <td><?= $row['Habitacion_idHabitacion']?></td>
                          <div class="d-flex justify-content-center gap-1">
                              <td class="text-center ">
-                             <a href="#" class="btn btn-success btn-editar-tarifa" data-id="<?= $row['idTarifa'] ?>">Editar</a>
+                             <a href="?section=editar_tarifa&id=<?= $row['idTarifa'] ?>" class="btn btn-success">Editar</a>
                              <a class="btn btn-danger" href="#" onclick="confirmarEliminacion(<?= ($row['idTarifa']) ?>)">Eliminar</a>
                              </td>
                          </div>                        

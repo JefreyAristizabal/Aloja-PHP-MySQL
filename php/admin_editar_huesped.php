@@ -32,15 +32,16 @@
             </div>
             <div class="input-group">
                 <label class="input-group-text" for="tipodocumento">Tipo de documento</label>
-                <select class="form-select" id="tipodocumento" name="tipodocumento" value="<?= $huesped['tipo_documento']?>" required>
-                    <option selected>Selecciona una opcion</option>
-                    <option value="tarjeta">TI</option>
-                    <option value="cedula">Cedula de ciudadania</option>
-                    <option value="otros">otro</option>
+                <select class="form-select" id="tipodocumento" name="tipodocumento" required>
+                    <option disabled <?= empty($huesped['tipo_documento']) ? 'selected' : '' ?>>Selecciona una opción</option>
+                    <option value="tarjeta" <?= $huesped['tipo_documento'] == 'tarjeta' ? 'selected' : '' ?>>TI</option>
+                    <option value="cedula" <?= $huesped['tipo_documento'] == 'cedula' ? 'selected' : '' ?>>Cédula de ciudadanía</option>
+                    <option value="otros" <?= $huesped['tipo_documento'] == 'otros' ? 'selected' : '' ?>>Otro</option>
                 </select>
+
             </div>
             <div class="form-floating my-3">
-                <input type="text" name="numero_documento_huesped" id="numero_documento_huesped" class="form-control" placeholder="" value="<?= $huesped['Numero_documento']?>" required>
+                <input type="text" name="numero_documento_huesped" id="numero_documento_huesped" class="form-control" placeholder="" value="<?= $huesped['numero_documento']?>" required>
                 <label for="numero_documento_huesped">Número de documento</label>
             </div>
             <div class="form-floating my-3">

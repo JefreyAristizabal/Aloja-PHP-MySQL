@@ -34,7 +34,7 @@ $res3 = $conn->query($sql3);
                          <td><?= $row['Estadia_idEstadia']?></td>
                          <div class="d-flex justify-content-center gap-1">
                              <td class="text-center">
-                             <a href="#" class="btn btn-success btn-editar-huespedxestadia" data-idhuesped="<?= $row['Estadia_idEstadia'] ?>" data-idestadia="<?= $row['HUESPED_idHUESPED'] ?>">Editar</a>
+                             <a href="?section=editar_empleado&idhuesped=<?= $row['HUESPED_idHUESPED'] ?>&idestadia=<?= $row['Estadia_idEstadia'] ?>" class="btn btn-success">Editar</a>
                               <a class="btn btn-danger" href="#" onclick="confirmarEliminacion(<?= ($row['HUESPED_idHUESPED']) ?>, <?= $row['Estadia_idEstadia'] ?>)">Eliminar</a>
                              </td>
                          </div>                      
@@ -49,33 +49,6 @@ $res3 = $conn->query($sql3);
                 </tr>
               </tfoot>
             </table>
-            <script>
-            $(document).ready(function () {
-              $(document).on('click', '.btn-editar-huespedxestadia', function (e) {
-                e.preventDefault();
-              
-                const idHuesped = $(this).data('idhuesped');
-                const idEstadia = $(this).data('idestadia');
-              
-                const $contenedor22 = $('#container22');
-              
-                $contenedor22.removeClass('d-none').addClass('d-block');
-              
-                for (let i = 1; i <= 25; i++) {
-                  if (i !== 22) {
-                    $('#container' + i).removeClass('d-block').addClass('d-none');
-                  }
-                }
-              
-                $contenedor22.load(`contenido22.php?idhuesped=${idHuesped}&idestadia=${idEstadia}`, function(response, status, xhr) {
-                  if (status === "error") {
-                    console.error("Error al cargar contenido22.php:", xhr.status, xhr.statusText);
-                    alert("Hubo un error al cargar el contenido.");
-                  }
-                });
-              });
-            });
-            </script>
             <script>
                 function confirmarEliminacion(id1, id2) {
                   Swal.fire({
