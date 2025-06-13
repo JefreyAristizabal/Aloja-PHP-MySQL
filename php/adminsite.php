@@ -75,7 +75,7 @@ $conn = conectarDB();
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
                 <li>
-                  <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                  <a class="dropdown-item" href="auth/logout.php">Cerrar sesión</a>
                 </li>
               </ul>
             </li>
@@ -126,7 +126,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-1">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_estadia" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_estadia" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -134,7 +134,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_estadia" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_estadia" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Estadía</span>
                     </a>
@@ -159,7 +159,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-2">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_huesped" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_huesped" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -167,7 +167,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_huesped" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_huesped" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Huesped</span>
                     </a>
@@ -192,7 +192,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-7">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_huespedxestadia" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_huespedxestadia" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -200,7 +200,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_huespedxestadia" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_huespedxestadia" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Huesped x Estadía</span>
                     </a>
@@ -225,7 +225,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-3">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_empleado" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_empleado" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -233,7 +233,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_empleado" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_empleado" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Empleado</span>
                     </a>
@@ -258,7 +258,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-4">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_habitacion" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_habitacion" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -266,7 +266,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_habitacion" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_habitacion" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Habitación</span>
                     </a>
@@ -291,7 +291,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-5">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_tarifa" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_tarifa" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -299,7 +299,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_tarifa" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_tarifa" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Tarifa</span>
                     </a>
@@ -324,7 +324,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-6">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_pago" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_pago" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -332,7 +332,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_pago" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_pago" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Pago</span>
                     </a>
@@ -357,7 +357,7 @@ $conn = conectarDB();
               <div class="collapse" id="layouts-8">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="?section=tabla_novedad" class="nav-link px-3 text-white">
+                    <a href="?section=tabla/tabla_novedad" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -365,7 +365,7 @@ $conn = conectarDB();
                     </a>
                   </li>
                   <li>
-                    <a href="?section=agregar_novedad" class="nav-link px-3 text-white">
+                    <a href="?section=agregar/agregar_novedad" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Novedad</span>
                     </a>
@@ -381,72 +381,71 @@ $conn = conectarDB();
     <main class="mt-5 pt-3 d-none" id="contenido">
       <!--contenido.php-->
     </main>
-    <main class="mt-5 pt-3 d-none" id="container">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <div class="card">
-              <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Agregar
-              </div>
-              <div class="card-body">
-              </div>
+    <!-- Plantilla de sección -->
+    <div class="container-fluid d-none">
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <span><i class="bi bi-table me-2"></i></span> Agregar
+            </div>
+            <div class="card-body">
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
     <script src="../js/jquery-3.6.0.min.js"></script>
-<script>
-  function cargarContenido(section, id = null) {
-    if (!section) section = 'panel'; // sección por defecto
-    let url = `admin_${section}.php`;
-    if (id) {
-      url += `?id=${id}`;
-    }
+    <script>
+      function cargarContenido(section, id = null) {
+        if (!section) section = 'panel'; // sección por defecto
+        let url = `admin/${section}.php`;
+        if (id) {
+          url += `?id=${id}`;
+        }
 
-    // Oculta todos los main excepto #contenido
-    $("main.mt-5.pt-3").addClass("d-none");
-    $("#contenido").removeClass("d-none");
+        // Oculta todos los main excepto #contenido
+        $("main.mt-5.pt-3").addClass("d-none");
+        $("#contenido").removeClass("d-none");
 
-    // Carga el contenido dinámico
-    $("#contenido").load(url, function() {
-      // Inicializa DataTables si hay tablas con la clase .data-table
-      if ($('.data-table').length) {
-        $('.data-table').DataTable();
+        // Carga el contenido dinámico
+        $("#contenido").load(url, function() {
+          // Inicializa DataTables si hay tablas con la clase .data-table
+          if ($('.data-table').length) {
+            $('.data-table').DataTable();
+          }
+        });
       }
-    });
-  }
 
-  $(document).ready(function() {
-    // Lee los parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
-    const section = params.get('section');
-    const id = params.get('id');
-    cargarContenido(section, id);
+      $(document).ready(function() {
+        // Lee los parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
+        const section = params.get('section');
+        const id = params.get('id');
+        cargarContenido(section, id);
 
-    // Maneja clicks en los links del menú para navegación SPA
-    $("a.nav-link").on("click", function(e) {
-      const href = $(this).attr("href");
-      if (href && href.startsWith("?section=")) {
-        e.preventDefault();
-        const urlParams = new URLSearchParams(href.split('?')[1]);
-        const nuevaSection = urlParams.get('section');
-        const nuevoId = urlParams.get('id');
-        history.pushState({}, '', href);
-        cargarContenido(nuevaSection, nuevoId);
-      }
-    });
+        // Maneja clicks en los links del menú para navegación SPA
+        $("a.nav-link").on("click", function(e) {
+          const href = $(this).attr("href");
+          if (href && href.startsWith("?section=")) {
+            e.preventDefault();
+            const urlParams = new URLSearchParams(href.split('?')[1]);
+            const nuevaSection = urlParams.get('section');
+            const nuevoId = urlParams.get('id');
+            history.pushState({}, '', href);
+            cargarContenido(nuevaSection, nuevoId);
+          }
+        });
 
-    // Soporte para navegación con el botón atrás/adelante del navegador
-    window.onpopstate = function() {
-      const params = new URLSearchParams(window.location.search);
-      const section = params.get('section');
-      const id = params.get('id');
-      cargarContenido(section, id);
-    };
-  });
-</script>
+        // Soporte para navegación con el botón atrás/adelante del navegador
+        window.onpopstate = function() {
+          const params = new URLSearchParams(window.location.search);
+          const section = params.get('section');
+          const id = params.get('id');
+          cargarContenido(section, id);
+        };
+      });
+    </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/jquery-3.5.1.js"></script>
     <script src="../js/jquery.dataTables.min.js"></script>

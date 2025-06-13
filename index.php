@@ -128,7 +128,7 @@ $result = $conn->query($sql);
                       <?php endif; ?>
                       
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="php/logout.php">Cerrar sesión</a>
+                      <a class="dropdown-item" href="php/auth/logout.php">Cerrar sesión</a>
                   </div>
               </li>
           </ul>

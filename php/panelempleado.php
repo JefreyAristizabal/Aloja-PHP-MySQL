@@ -5,28 +5,6 @@ if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
   header("Location: ../html/log-in.html");
   exit();
 }
-
-include_once '../config/conection.php';
-$conn = conectarDB();
-
-$sql1 = "SELECT * FROM estadia";
-$res1 = $conn->query($sql1);
-
-$sql2 = "SELECT * FROM huesped";
-$res2 = $conn->query($sql2);
-
-$sql3 = "SELECT * FROM huesped_has_estadia";
-$res3 = $conn->query($sql3);
-
-$sql5 = "SELECT * FROM habitacion";
-$res5 = $conn->query($sql5);
-
-$sql6 = "SELECT * FROM tarifa";
-$res6 = $conn->query($sql6);
-
-$sql7 = "SELECT * FROM pagos";
-$res7 = $conn->query($sql7);
-
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +73,7 @@ $res7 = $conn->query($sql7);
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
                 <li>
-                  <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                  <a class="dropdown-item" href="auth/logout.php">Cerrar sesión</a>
                 </li>
               </ul>
             </li>
@@ -118,7 +96,7 @@ $res7 = $conn->query($sql7);
               </div>
             </li>
             <li>
-              <a href="#" class="nav-link px-3 active text-white" id="link1">
+              <a href="?section=panel" class="nav-link px-3 active text-white">
                 <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                 <span>Panel</span>
               </a>
@@ -146,7 +124,7 @@ $res7 = $conn->query($sql7);
               <div class="collapse" id="layouts-1">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link2">
+                    <a href="?section=tabla/tabla_estadia" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -154,7 +132,7 @@ $res7 = $conn->query($sql7);
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link9">
+                    <a href="?section=agregar/agregar_estadia" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Estadía</span>
                     </a>
@@ -179,7 +157,7 @@ $res7 = $conn->query($sql7);
               <div class="collapse" id="layouts-2">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link3">
+                    <a href="?section=tabla/tabla_huesped" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -187,7 +165,7 @@ $res7 = $conn->query($sql7);
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link10">
+                    <a href="?section=agregar/agregar_huesped" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Huesped</span>
                     </a>
@@ -212,7 +190,7 @@ $res7 = $conn->query($sql7);
               <div class="collapse" id="layouts-7">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link4">
+                    <a href="?section=tabla/tabla_huespedxestadia" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -220,7 +198,7 @@ $res7 = $conn->query($sql7);
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link11">
+                    <a href="?section=agregar/agregar_huespedxestadia" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Huesped x Estadía</span>
                     </a>
@@ -231,8 +209,7 @@ $res7 = $conn->query($sql7);
             <li>
               <a
                 class="nav-link px-3 sidebar-link text-white"
-                id="link5"
-                href="#"
+                href="?section=tabla/tabla_habitacion"
               >
                 <span class="me-2"><i class="bi bi-table"></i></span>
                 <span>Tabla de Habitaciones</span>
@@ -241,8 +218,7 @@ $res7 = $conn->query($sql7);
             <li>
               <a
                 class="nav-link px-3 sidebar-link text-white"
-                id="link6"
-                href="#"
+                href="?section=tabla/tabla_tarifa"
               >
                 <span class="me-2"><i class="bi bi-table"></i></span>
                 <span>Tabla de Tarifas</span>
@@ -265,7 +241,7 @@ $res7 = $conn->query($sql7);
               <div class="collapse" id="layouts-6">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link7">
+                    <a href="?section=tabla/tabla_pago" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -273,7 +249,7 @@ $res7 = $conn->query($sql7);
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link12">
+                    <a href="?section=agregar/agregar_pago" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Pago</span>
                     </a>
@@ -298,7 +274,7 @@ $res7 = $conn->query($sql7);
               <div class="collapse" id="layouts-8">
                 <ul class="navbar-nav ps-3">
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link8">
+                    <a href="?section=tabla/tabla_novedad" class="nav-link px-3 text-white">
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
@@ -306,7 +282,7 @@ $res7 = $conn->query($sql7);
                     </a>
                   </li>
                   <li>
-                    <a href="#" class="nav-link px-3 text-white" id="link13">
+                    <a href="?section=agregar/agregar_novedad" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
                       <span>Agregar Novedad</span>
                     </a>
@@ -319,386 +295,73 @@ $res7 = $conn->query($sql7);
       </div>
     </div>
     <!-- offcanvas -->
-    <main class="mt-5 pt-3" id="container1">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <h4>Panel</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <div class="card bg-primary text-white h-100">
-              <div class="card-body py-5">Agregar Huesped</div>
-              <div class="card-footer d-flex">
-                Agregar +
-                <span class="ms-auto">
-                  <i class="bi bi-chevron-right"></i>
-                </span>
-              </div>
+    <main class="mt-5 pt-3 d-none" id="contenido">
+      <!--contenido.php-->
+    </main>
+    <!-- Plantilla de sección -->
+    <div class="container-fluid d-none">
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <span><i class="bi bi-table me-2"></i></span> Agregar
             </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card bg-warning text-dark h-100">
-              <div class="card-body py-5">Agregar Estadía</div>
-              <div class="card-footer d-flex">
-                Agregar +
-                <span class="ms-auto">
-                  <i class="bi bi-chevron-right"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white h-100">
-              <div class="card-body py-5">Editar Estadía</div>
-              <div class="card-footer d-flex">
-                Editar<i class="bi bi-pen px-2"></i>
-                <span class="ms-auto">
-                  <i class="bi bi-chevron-right"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <div class="card bg-danger text-white h-100">
-              <div class="card-body py-5">Cancelar Estadía</div>
-              <div class="card-footer d-flex">
-                Cancelar -
-                <span class="ms-auto">
-                  <i class="bi bi-chevron-right"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <div class="card">
-              <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Estadias
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table
-                    id="example"
-                    class="table table-striped data-table"
-                    style="width: 100%"
-                  >
-                    <thead>
-                      <tr>
-                        <th>ID de Estadía</th>
-                        <th>Fecha de Inicio</th>
-                        <th>Fecha de Fin</th>
-                        <th>Fecha de Registro</th>
-                        <th>Costo</th>
-                        <th>ID de Habitación</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php while($row = $res1->fetch_assoc()): ?>
-                           <tr>
-                               <td><?=  $row['idEstadia']?></td>
-                               <td><?= $row['Fecha_Inicio']?></td>
-                               <td><?= $row['Fecha_Fin']?></td>
-                               <td><?= $row['Fecha_Registro']?></td>
-                               <td><?= $row['Costo']?></td>
-                               <td><?= $row['Habitacion_idHabitacion']?></td>                   
-                           </tr>
-                      <?php  endwhile; ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>ID de Estadía</th>
-                        <th>Fecha de Inicio</th>
-                        <th>Fecha de Fin</th>
-                        <th>Fecha de Registro</th>
-                        <th>Costo</th>
-                        <th>ID de Habitación</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <div class="card">
-              <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Huespedes
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table
-                    id="example"
-                    class="table table-striped data-table"
-                    style="width: 100%"
-                  >
-                    <thead>
-                      <tr>
-                        <th>ID de Huesped</th>
-                        <th>Nombre Completo</th>
-                        <th>Tipo de Documento</th>
-                        <th>Número de Documento</th>
-                        <th>Teléfono de Huesped</th>
-                        <th>Origen</th>
-                        <th>Nombre de Contacto</th>
-                        <th>Teléfono de Contacto</th>
-                        <th>Observaciones</th>
-                        <th>Otras Observaciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php while($row = $res2->fetch_assoc()): ?>
-                           <tr>
-                               <td><?=  $row['idHUESPED']?></td>
-                               <td><?= $row['Nombre_completo']?></td>
-                               <td><?= $row['tipo_documento']?></td>
-                               <td><?= $row['Numero_documento']?></td>
-                               <td><?= $row['Telefono_huesped']?></td>
-                               <td><?= $row['Origen']?></td>
-                               <td><?= $row['Nombre_Contacto']?></td>
-                               <td><?= $row['Telefono_contacto']?></td>
-                               <td><?= $row['Observaciones']?></td>
-                               <td><?= $row['observaciones2']?></td>                     
-                           </tr>
-                      <?php  endwhile; ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>ID de Huesped</th>
-                        <th>Nombre Completo</th>
-                        <th>Tipo de Documento</th>
-                        <th>Número de Documento</th>
-                        <th>Teléfono de Huesped</th>
-                        <th>Origen</th>
-                        <th>Nombre de Contacto</th>
-                        <th>Teléfono de Contacto</th>
-                        <th>Observaciones</th>
-                        <th>Otras Observaciones</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <div class="card">
-              <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Habitaciones
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table
-                    id="example"
-                    class="table table-striped data-table"
-                    style="width: 100%"
-                  >
-                    <thead>
-                      <tr>
-                        <th>ID de Habitación</th>
-                        <th>Nombre</th>
-                        <th>Capacidad</th>
-                        <th>Descripción</th>
-                        <th>Imagen</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php while($row = $res5->fetch_assoc()): ?>
-                           <tr>
-                               <td><?=  $row['idHABITACION']?></td>
-                               <td><?= $row['NOMBRE']?></td>
-                               <td><?= $row['CAPACIDAD']?></td>
-                               <td><?= $row['DESCRIPCION']?></td>
-                               <td><?= $row['IMAGEN']?></td>                       
-                           </tr>
-
-                      <?php  endwhile; ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>ID de Habitación</th>
-                        <th>Nombre</th>
-                        <th>Capacidad</th>
-                        <th>Descripción</th>
-                        <th>Imagen</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <div class="card">
-              <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Tarifas
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table
-                    id="example"
-                    class="table table-striped data-table"
-                    style="width: 100%"
-                  >
-                    <thead>
-                      <tr>
-                        <th>ID de Tarifa</th>
-                        <th>Modalidad</th>
-                        <th>Número de Huespedes</th>
-                        <th>Valor</th>
-                        <th>ID de Habitación</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php while($row = $res6->fetch_assoc()): ?>
-                           <tr>
-                               <td><?=  $row['idTarifa']?></td>
-                               <td><?= $row['Modalidad']?></td>
-                               <td><?= $row['NroHuespedes']?></td>
-                               <td><?= $row['Valor']?></td>
-                               <td><?= $row['Habitacion_idHabitacion']?></td>                      
-                           </tr>
-                      <?php  endwhile; ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>ID de Tarifa</th>
-                        <th>Modalidad</th>
-                        <th>Número de Huespedes</th>
-                        <th>Valor</th>
-                        <th>ID de Habitación</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
+            <div class="card-body">
             </div>
           </div>
         </div>
       </div>
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <div class="card">
-              <div class="card-header">
-                <span><i class="bi bi-table me-2"></i></span> Agregar
-              </div>
-              <div class="card-body">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container2">
-      <!--Tabla Estadías-->
-      <!--contenido_emp2.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container3">
-      <!--Tabla Huespedes-->
-      <!--contenido_emp3.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container4">
-      <!--Tabla Huespedes x Estadía-->
-      <!--contenido_emp4.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container5">
-      <!--Tabla Habitaciones-->
-      <!--contenido_emp5.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container6">
-      <!--Tabla Tarifas-->
-      <!--contenido_emp6.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container7">
-      <!--Tabla Pagos-->
-      <!--contenido_emp7.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container8">
-      <!--Tabla Novedades-->
-      <!--contenido_emp8.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container9">
-      <!--Agregar Estadía-->
-      <!--contenido_emp9.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container10">
-      <!--Agregar Huesped-->
-      <!--contenido_emp10.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container11">
-      <!--Agregar Huesped x Estadía-->
-      <!--contenido_emp11.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container12">
-      <!--Agregar Pago-->
-      <!--contenido_emp12.php-->
-    </main>
-    <main class="mt-5 pt-3 d-none" id="container13">
-      <!--Agregar Novedad-->
-      <!--contenido_emp13.php-->
-    </main>
+    </div>
     <script src="../js/jquery-3.6.0.min.js"></script>
-    <script>
-      function mostrarContenedor(linkId, containerId) {
-        $(`#${linkId}`).on('click', function(event) {
-          event.preventDefault();
-        
-          const $contenedorActual = $(`#${containerId}`);
-          const contenedorActivo = parseInt(containerId.replace("container", ""));
-        
-          $contenedorActual.removeClass("d-none").addClass("d-block");
-        
-          let url = `contenido_emp${contenedorActivo}.php`;
+        <script>
+      function cargarContenido(section, id = null) {
+        if (!section) section = 'panel'; // sección por defecto
+        let url = `empleado/${section}.php`;
+        if (id) {
+          url += `?id=${id}`;
+        }
 
-          if ([5].includes(contenedorActivo)) {
-            const id = new URLSearchParams(window.location.search).get("id");
-            if (id) {
-              url += `?id=${id}`;
-            }
-          }
-        
-          $contenedorActual.load(url, function () {
-            if (contenedorActivo !== 1) {
-              $contenedorActual.find('.data-table').DataTable();
-            }
-          });
-        
-          for (let i = 1; i <= 13; i++) {
-            if (i !== contenedorActivo) {
-              const $otroContenedor = $(`#container${i}`);
-              if ($otroContenedor.length) {
-                $otroContenedor.removeClass("d-block").addClass("d-none");
-              }
-            }
+        // Oculta todos los main excepto #contenido
+        $("main.mt-5.pt-3").addClass("d-none");
+        $("#contenido").removeClass("d-none");
+
+        // Carga el contenido dinámico
+        $("#contenido").load(url, function() {
+          // Inicializa DataTables si hay tablas con la clase .data-table
+          if ($('.data-table').length) {
+            $('.data-table').DataTable();
           }
         });
       }
 
       $(document).ready(function() {
-        for (let i = 1; i <= 13; i++) {
-          if ($(`#link${i}`).length && $(`#container${i}`).length) {
-            mostrarContenedor(`link${i}`, `container${i}`);
-          }
-        }
-      
-        const urlParams = new URLSearchParams(window.location.search);
-        const idHabitacion = urlParams.get("id");
-        if (idHabitacion) {
-          $(`#link${idHabitacion}`).click();
-        }
-      });
+        // Lee los parámetros de la URL
+        const params = new URLSearchParams(window.location.search);
+        const section = params.get('section');
+        const id = params.get('id');
+        cargarContenido(section, id);
 
+        // Maneja clicks en los links del menú para navegación SPA
+        $("a.nav-link").on("click", function(e) {
+          const href = $(this).attr("href");
+          if (href && href.startsWith("?section=")) {
+            e.preventDefault();
+            const urlParams = new URLSearchParams(href.split('?')[1]);
+            const nuevaSection = urlParams.get('section');
+            const nuevoId = urlParams.get('id');
+            history.pushState({}, '', href);
+            cargarContenido(nuevaSection, nuevoId);
+          }
+        });
+
+        // Soporte para navegación con el botón atrás/adelante del navegador
+        window.onpopstate = function() {
+          const params = new URLSearchParams(window.location.search);
+          const section = params.get('section');
+          const id = params.get('id');
+          cargarContenido(section, id);
+        };
+      });
     </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/jquery-3.5.1.js"></script>

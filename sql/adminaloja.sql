@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: adminaloja
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.32-MariaDB
+-- Server version	8.4.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `empleado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `empleado` (
-  `idEmpleado` int(11) NOT NULL AUTO_INCREMENT,
+  `idEmpleado` int NOT NULL AUTO_INCREMENT,
   `Nombre_Completo` varchar(45) DEFAULT NULL,
   `Usuario` varchar(45) DEFAULT NULL,
   `Password` varchar(45) DEFAULT NULL,
   `Rol` enum('EMPLEADO','ADMIN') DEFAULT NULL,
   PRIMARY KEY (`idEmpleado`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,16 +48,16 @@ DROP TABLE IF EXISTS `estadia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `estadia` (
-  `idEstadia` int(11) NOT NULL AUTO_INCREMENT,
+  `idEstadia` int NOT NULL AUTO_INCREMENT,
   `Fecha_Inicio` date DEFAULT NULL,
   `Fecha_Fin` date DEFAULT NULL,
-  `Fecha_Registro` datetime DEFAULT current_timestamp(),
+  `Fecha_Registro` datetime DEFAULT CURRENT_TIMESTAMP,
   `Costo` double DEFAULT NULL,
-  `Habitacion_idHabitacion` int(11) NOT NULL,
+  `Habitacion_idHabitacion` int NOT NULL,
   PRIMARY KEY (`idEstadia`),
   KEY `fk_Estadia_Habitacion1_idx` (`Habitacion_idHabitacion`),
-  CONSTRAINT `fk_Estadia_Habitacion1` FOREIGN KEY (`Habitacion_idHabitacion`) REFERENCES `habitacion` (`idHABITACION`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `fk_Estadia_Habitacion1` FOREIGN KEY (`Habitacion_idHabitacion`) REFERENCES `habitacion` (`idHABITACION`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `estadia` (
 --
 
 /*!40000 ALTER TABLE `estadia` DISABLE KEYS */;
-INSERT INTO `estadia` VALUES (1,'2025-03-01','2025-03-05','2025-02-28 10:00:00',700,1),(2,'2025-03-06','2025-03-10','2025-03-05 12:00:00',750,2),(3,'2025-03-11','2025-03-15','2025-03-10 14:00:00',1000,3),(4,'2025-03-16','2025-03-20','2025-03-15 16:00:00',600,4),(5,'2025-03-21','2025-03-25','2025-03-20 18:00:00',800,5),(6,'2025-03-26','2025-03-30','2025-03-25 20:00:00',1200,6),(7,'2025-04-01','2025-04-05','2025-03-31 08:00:00',550,7),(8,'2025-04-06','2025-04-10','2025-04-05 10:00:00',700,8),(9,'2025-04-11','2025-04-15','2025-04-10 12:00:00',950,9),(10,'2025-04-16','2025-04-20','2025-04-15 14:00:00',1100,10);
+INSERT INTO `estadia` VALUES (18,'2026-03-03','2026-06-06','2025-06-13 18:36:53',3123,8);
 /*!40000 ALTER TABLE `estadia` ENABLE KEYS */;
 
 --
@@ -76,15 +76,15 @@ DROP TABLE IF EXISTS `habitacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `habitacion` (
-  `idHABITACION` int(11) NOT NULL AUTO_INCREMENT,
-  `CAPACIDAD` int(10) unsigned DEFAULT NULL,
+  `idHABITACION` int NOT NULL AUTO_INCREMENT,
+  `CAPACIDAD` int unsigned DEFAULT NULL,
   `DESCRIPCION` varchar(45) DEFAULT NULL,
   `NOMBRE` varchar(45) DEFAULT NULL,
   `COSTONOCHE` double DEFAULT NULL,
   `IMAGEN` varchar(255) DEFAULT NULL,
   `ESTADO` enum('OCUPADO','EN MANTENIMIENTO','DISPONIBLE') DEFAULT NULL,
   PRIMARY KEY (`idHABITACION`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `habitacion` (
 --
 
 /*!40000 ALTER TABLE `habitacion` DISABLE KEYS */;
-INSERT INTO `habitacion` VALUES (1,2,'Con WI-FI y TV','Habitación Doble',NULL,'imagenes_habitaciones/1744057446_descarga.jpg',NULL),(2,1,'Con WI-FI, comida incluida y TV','Habitación Individual',NULL,'imagenes_habitaciones/1744058631_descarga (1).jpg',NULL),(3,5,'Con WI-FI, comida incluida y vista al mar','Habitación Suite',NULL,'imagenes_habitaciones/1744058702_descarga (2).jpg',NULL),(4,3,'Con WI-FI y TV','Habitación Triple',NULL,'imagenes_habitaciones/1744058743_descarga (3).jpg',NULL),(5,4,'Con WI-FI','Habitación Cuatruple',NULL,'imagenes_habitaciones/1744058795_descarga (4).jpg',NULL),(6,6,'Con WI-FI, comida incluida y TV','Habitación Suite',NULL,'imagenes_habitaciones/1744071612_images.jpg',NULL),(7,1,'Con WI-FI y comida incluida','Habitación Estudio',NULL,'imagenes_habitaciones/1744485544_images.jpg',NULL);
+INSERT INTO `habitacion` VALUES (8,3,'Muy bonita','Habitación 101',NULL,'../imagenes_habitaciones/1749857222_descargar.jpg',NULL),(9,1,'Muy bonita también','Habitación 102',NULL,'../imagenes_habitaciones/1749857435_descargar (1).jpg',NULL),(10,2,'Muy fea','Habitación 103',NULL,'../imagenes_habitaciones/1749857452_descargar (2).jpg',NULL),(11,10,'Muy horrible','Habitación 104',NULL,'../imagenes_habitaciones/1749857476_descargar (3).jpg',NULL),(12,9,'Muy sucia, qué asco','Habitación 105',NULL,'../imagenes_habitaciones/1749857509_descargar (4).jpg',NULL);
 /*!40000 ALTER TABLE `habitacion` ENABLE KEYS */;
 
 --
@@ -103,10 +103,10 @@ DROP TABLE IF EXISTS `huesped`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `huesped` (
-  `idHUESPED` int(11) NOT NULL AUTO_INCREMENT,
+  `idHUESPED` int NOT NULL AUTO_INCREMENT,
   `Nombre_completo` varchar(45) DEFAULT NULL,
   `tipo_documento` varchar(45) DEFAULT NULL,
-  `numero_documento` varchar(20) NOT NULL,
+  `numero_documento` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'Número de documento del huésped, puede ser un número de identificación o pasaporte',
   `Telefono_huesped` varchar(45) DEFAULT NULL,
   `Origen` varchar(45) DEFAULT NULL,
   `Nombre_Contacto` varchar(45) DEFAULT NULL,
@@ -114,8 +114,9 @@ CREATE TABLE `huesped` (
   `Observaciones` varchar(45) DEFAULT NULL,
   `observaciones2` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idHUESPED`),
-  UNIQUE KEY `numero_documento` (`numero_documento`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  UNIQUE KEY `numero_documento` (`numero_documento`),
+  UNIQUE KEY `numero_documento_2` (`numero_documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +124,7 @@ CREATE TABLE `huesped` (
 --
 
 /*!40000 ALTER TABLE `huesped` DISABLE KEYS */;
-INSERT INTO `huesped` VALUES (4,'Ana Martínez','DNI','44332211','456789012','Uruguay','Pedro Martínez','654321098','Ninguna','Ninguna'),(5,'Pedro González','DNI','55667788','567890123','Paraguay','Sofía González','543210987','Ninguna','Ninguna'),(6,'Laura Rodríguez','DNI','88776655','678901234','Bolivia','Miguel Rodríguez','432109876','Ninguna','Ninguna'),(7,'Miguel Fernández','DNI','99887766','789012345','Ecuador','Lucía Fernández','321098765','Ninguna','Ninguna'),(8,'Lucía Sánchez','DNI','66778899','890123456','Colombia','Jorge Sánchez','210987654','Ninguna','Ninguna'),(9,'Jorge Ramírez','DNI','77665544','901234567','Venezuela','Elena Ramírez','109876543','Ninguna','Ninguna');
+INSERT INTO `huesped` VALUES (4,'Jefrey','tarjeta','44332211','456789012','Uruguay','Pedro Martínez','654321098','Ninguna','Ninguna'),(5,'Pedro González','cedula','55667788','567890123','Paraguay','Sofía González','543210987','Ninguna','Ninguna'),(6,'Laura Rodríguez','otros','88776655','678901234','Bolivia','Miguel Rodríguez','432109876','Ninguna','Ninguna'),(7,'Miguel Fernández','DNI','99887766','789012345','Ecuador','Lucía Fernández','321098765','Ninguna','Ninguna'),(8,'Lucía Sánchez','DNI','66778899','890123456','Colombia','Jorge Sánchez','210987654','Ninguna','Ninguna'),(9,'Jorge Ramírez','DNI','77665544','901234567','Venezuela','Elena Ramírez','109876543','Ninguna','Ninguna');
 /*!40000 ALTER TABLE `huesped` ENABLE KEYS */;
 
 --
@@ -134,13 +135,13 @@ DROP TABLE IF EXISTS `huesped_has_estadia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `huesped_has_estadia` (
-  `HUESPED_idHUESPED` int(11) NOT NULL,
-  `Estadia_idEstadia` int(11) NOT NULL,
+  `HUESPED_idHUESPED` int NOT NULL,
+  `Estadia_idEstadia` int NOT NULL,
   KEY `fk_HUESPED_has_Estadia_Estadia1` (`Estadia_idEstadia`),
   KEY `fk_HUESPED_has_Estadia_HUESPED1` (`HUESPED_idHUESPED`),
-  CONSTRAINT `fk_HUESPED_has_Estadia_Estadia1` FOREIGN KEY (`Estadia_idEstadia`) REFERENCES `estadia` (`idEstadia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_HUESPED_has_Estadia_HUESPED1` FOREIGN KEY (`HUESPED_idHUESPED`) REFERENCES `huesped` (`idHUESPED`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `fk_HUESPED_has_Estadia_Estadia1` FOREIGN KEY (`Estadia_idEstadia`) REFERENCES `estadia` (`idEstadia`),
+  CONSTRAINT `fk_HUESPED_has_Estadia_HUESPED1` FOREIGN KEY (`HUESPED_idHUESPED`) REFERENCES `huesped` (`idHUESPED`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +149,7 @@ CREATE TABLE `huesped_has_estadia` (
 --
 
 /*!40000 ALTER TABLE `huesped_has_estadia` DISABLE KEYS */;
-INSERT INTO `huesped_has_estadia` VALUES (4,4);
+INSERT INTO `huesped_has_estadia` VALUES (4,18);
 /*!40000 ALTER TABLE `huesped_has_estadia` ENABLE KEYS */;
 
 --
@@ -159,13 +160,13 @@ DROP TABLE IF EXISTS `novedades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `novedades` (
-  `idNovedades` int(11) NOT NULL AUTO_INCREMENT,
+  `idNovedades` int NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(255) DEFAULT NULL,
-  `Estadia_idEstadia` int(11) NOT NULL,
+  `Estadia_idEstadia` int NOT NULL,
   PRIMARY KEY (`idNovedades`),
   KEY `fk_Novedades_Estadia1_idx` (`Estadia_idEstadia`),
-  CONSTRAINT `fk_Novedades_Estadia1` FOREIGN KEY (`Estadia_idEstadia`) REFERENCES `estadia` (`idEstadia`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `fk_Novedades_Estadia1` FOREIGN KEY (`Estadia_idEstadia`) REFERENCES `estadia` (`idEstadia`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +174,7 @@ CREATE TABLE `novedades` (
 --
 
 /*!40000 ALTER TABLE `novedades` DISABLE KEYS */;
-INSERT INTO `novedades` VALUES (1,'Novedad 1',1),(2,'Novedad 2',2),(3,'Novedad 3',3),(4,'Novedad 4',4),(5,'Novedad 5',5),(6,'Novedad 6',6),(7,'Novedad 7',7),(8,'Novedad 8',8),(9,'Novedad 9',9),(10,'Novedad 10',10);
+INSERT INTO `novedades` VALUES (11,'Mi mama me miima',18);
 /*!40000 ALTER TABLE `novedades` ENABLE KEYS */;
 
 --
@@ -184,14 +185,14 @@ DROP TABLE IF EXISTS `otro_ingreso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `otro_ingreso` (
-  `idOtro_Ingreso` int(11) NOT NULL AUTO_INCREMENT,
-  `Fecha_Registro` datetime DEFAULT current_timestamp(),
-  `Empleado_idEmpleado` int(11) DEFAULT NULL,
-  `Empleado_idEmpleado1` int(11) NOT NULL,
+  `idOtro_Ingreso` int NOT NULL AUTO_INCREMENT,
+  `Fecha_Registro` datetime DEFAULT CURRENT_TIMESTAMP,
+  `Empleado_idEmpleado` int DEFAULT NULL,
+  `Empleado_idEmpleado1` int NOT NULL,
   PRIMARY KEY (`idOtro_Ingreso`),
   KEY `fk_Otro_Ingreso_Empleado1_idx` (`Empleado_idEmpleado1`),
-  CONSTRAINT `fk_Otro_Ingreso_Empleado1` FOREIGN KEY (`Empleado_idEmpleado1`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `fk_Otro_Ingreso_Empleado1` FOREIGN KEY (`Empleado_idEmpleado1`) REFERENCES `empleado` (`idEmpleado`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,12 +211,12 @@ DROP TABLE IF EXISTS `pagos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pagos` (
-  `idPagos` int(11) NOT NULL AUTO_INCREMENT,
+  `idPagos` int NOT NULL AUTO_INCREMENT,
   `Fecha_Pago` datetime DEFAULT NULL,
   `Valor` double DEFAULT NULL,
-  `Empleado_idEmpleado` int(11) NOT NULL,
-  `Estadia_idEstadia` int(11) NOT NULL,
-  `HUESPED_idHUESPED` int(11) NOT NULL,
+  `Empleado_idEmpleado` int NOT NULL,
+  `Estadia_idEstadia` int NOT NULL,
+  `HUESPED_idHUESPED` int NOT NULL,
   `Imagen` varchar(100) DEFAULT NULL,
   `Observacion` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idPagos`,`HUESPED_idHUESPED`),
@@ -223,10 +224,10 @@ CREATE TABLE `pagos` (
   KEY `fk_Pagos_Empleado1_idx` (`Empleado_idEmpleado`),
   KEY `fk_Pagos_Estadia1_idx` (`Estadia_idEstadia`),
   KEY `fk_Pagos_HUESPED1_idx` (`HUESPED_idHUESPED`),
-  CONSTRAINT `fk_Pagos_Empleado1` FOREIGN KEY (`Empleado_idEmpleado`) REFERENCES `empleado` (`idEmpleado`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Pagos_Estadia1` FOREIGN KEY (`Estadia_idEstadia`) REFERENCES `estadia` (`idEstadia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Pagos_Empleado1` FOREIGN KEY (`Empleado_idEmpleado`) REFERENCES `empleado` (`idEmpleado`),
+  CONSTRAINT `fk_Pagos_Estadia1` FOREIGN KEY (`Estadia_idEstadia`) REFERENCES `estadia` (`idEstadia`),
   CONSTRAINT `fk_Pagos_HUESPED1` FOREIGN KEY (`HUESPED_idHUESPED`) REFERENCES `huesped` (`idHUESPED`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,7 +235,7 @@ CREATE TABLE `pagos` (
 --
 
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (4,'2025-06-03 14:00:00',30000,1,2,9,'imagenes_pagos/1744490664_descarga.png','jijija');
+INSERT INTO `pagos` VALUES (6,'2025-02-03 15:01:00',123123123,1,18,4,'../imagenes_pagos/1749857847_Factura-deee9d17357b444baac4daccd31e06a6.jpg','123123123');
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 
 --
@@ -245,15 +246,15 @@ DROP TABLE IF EXISTS `tarifa`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tarifa` (
-  `idTarifa` int(11) NOT NULL AUTO_INCREMENT,
+  `idTarifa` int NOT NULL AUTO_INCREMENT,
   `Modalidad` varchar(45) DEFAULT NULL,
-  `NroHuespedes` int(11) DEFAULT NULL,
+  `NroHuespedes` int DEFAULT NULL,
   `Valor` double DEFAULT NULL,
-  `Habitacion_idHabitacion` int(11) NOT NULL,
+  `Habitacion_idHabitacion` int NOT NULL,
   PRIMARY KEY (`idTarifa`),
   KEY `fk_Tarifa_Habitacion1_idx` (`Habitacion_idHabitacion`),
-  CONSTRAINT `fk_Tarifa_Habitacion1` FOREIGN KEY (`Habitacion_idHabitacion`) REFERENCES `habitacion` (`idHABITACION`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `fk_Tarifa_Habitacion1` FOREIGN KEY (`Habitacion_idHabitacion`) REFERENCES `habitacion` (`idHABITACION`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +262,7 @@ CREATE TABLE `tarifa` (
 --
 
 /*!40000 ALTER TABLE `tarifa` DISABLE KEYS */;
-INSERT INTO `tarifa` VALUES (1,'Estándar',2,100,1),(2,'Deluxe',3,150,2),(3,'Suite',4,200,3),(4,'Estándar',2,100,4),(5,'Deluxe',3,150,5),(6,'Suite',4,200,6),(7,'Estándar',2,100,7),(8,'Deluxe',3,150,8),(9,'Suite',4,200,9),(10,'Estándar',2,100,10);
+INSERT INTO `tarifa` VALUES (13,'Mi mama me mima',4,100,8),(14,'Mi mama me mima xd',1,1003,9),(15,'El pepe',2,123123,10),(16,'Moringa',10,123123,11),(17,'Pepeto',8,1231231,12);
 /*!40000 ALTER TABLE `tarifa` ENABLE KEYS */;
 
 --
@@ -367,4 +368,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-17 19:00:34
+-- Dump completed on 2025-06-13 18:40:17
