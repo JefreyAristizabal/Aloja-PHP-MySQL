@@ -1,4 +1,19 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+  header("Location: ../html/log-in.html");
+  exit();
+}
+
 include_once '../../config/conection.php';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

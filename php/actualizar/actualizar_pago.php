@@ -1,4 +1,19 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+  header("Location: ../html/log-in.html");
+  exit();
+}
+
 include '../../config/conection.php';
 $conn = conectarDB();
 
@@ -54,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
                 exit();
             }
 
-            $carpeta = "../imagenes_pagos/";
+            $carpeta = "imagenes_pagos/";
             if (!is_dir($carpeta)) {
                 mkdir($carpeta, 0777, true);
             }

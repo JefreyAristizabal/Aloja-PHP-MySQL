@@ -1,6 +1,25 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+  header("Location: ../html/log-in.html");
+  exit();
+}
+
 include_once '../../config/conection.php';
 $conn = conectarDB();
+
+// Configuración segura
+$key_hex = '14485940e7b744fc60867fcc77c96fe28c29cbe15a668ba6b4e7dc8bb38814e1'; // Reemplaza por tu clave segura generada con random_bytes(32)
+$key = hex2bin($key_hex);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $empleado_nombre = $_POST['empleado_nombre'];
@@ -16,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_check->store_result();
 
     if ($stmt_check->num_rows > 0) {
-        // Ya existe un empleado con ese nombre
         echo "
         <!DOCTYPE html>
         <html>
@@ -43,11 +61,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt_check->close();
 
+    // Cifrado seguro de la contraseña
+    $iv = random_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    $cipher_password = openssl_encrypt(
+        $password,
+        'aes-256-cbc',
+        $key,
+        0,
+        $iv
+    );
+    $password_cifrada = base64_encode($iv . $cipher_password);
+
     $sql = "INSERT INTO empleado (Nombre_Completo, Usuario, Password, Rol)
             VALUES (?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $empleado_nombre, $usuario, $password, $rol);
+    $stmt->bind_param("ssss", $empleado_nombre, $usuario, $password_cifrada, $rol);
 
     if ($stmt->execute()) {
         echo "

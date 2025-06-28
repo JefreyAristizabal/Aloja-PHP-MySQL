@@ -1,4 +1,20 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'ADMIN') {
+  header("Location: ../html/log-in.html");
+  exit();
+}
+
+
 include_once '../../../config/conection.php';
 $conn = conectarDB();
 
@@ -25,7 +41,7 @@ $res8 = $conn->query($sql8);
                   <th>ID de Novedad</th>
                   <th>Descripción</th>
                   <th>ID de Estadía</th>
-                  <th>Acción</th>
+                  <th class="no-export">Acción</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,7 +51,7 @@ $res8 = $conn->query($sql8);
                          <td><?= $row['Descripcion']?></td>
                          <td><?= $row['Estadia_idEstadia']?></td>
                          <div class="d-flex justify-content-center gap-1">
-                             <td class="text-center ">
+                             <td class="text-center no-export">
                              <a href="?section=editar/editar_novedad&id=<?= $row['idNovedades'] ?>" class="btn btn-success">Editar</a>
                              <a class="btn btn-danger" href="#" onclick="confirmarEliminacion(<?= ($row['idNovedades']) ?>)">Eliminar</a>
                              </td>
@@ -48,7 +64,7 @@ $res8 = $conn->query($sql8);
                   <th>ID de Novedad</th>
                   <th>Descripción</th>
                   <th>ID de Estadía</th>
-                  <th>Acción</th>
+                  <th class="no-export">Acción</th>
                 </tr>
               </tfoot>
             </table>
@@ -76,4 +92,14 @@ $res8 = $conn->query($sql8);
       </div>
     </div>
   </div>
+</div>
+<div class="d-flex justify-content-end align-items-center gap-2 mb-3 mx-3">
+  <select id="tipo-exportacion" class="form-select w-auto">
+    <option value="pdf">PDF</option>
+    <option value="excel">Excel</option>
+    <option value="csv">CSV</option>
+  </select>
+  <button id="btn-exportar" class="btn btn-primary">
+    <i class="bi bi-download me-1"></i>Exportar
+  </button>
 </div>

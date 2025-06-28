@@ -37,7 +37,7 @@ CREATE TABLE `empleado` (
 --
 
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-INSERT INTO `empleado` VALUES (1,'Usuario Admin','admin','adminpass','ADMIN'),(2,'Empleado Uno','emp1','Papitas','EMPLEADO');
+INSERT INTO `empleado` VALUES (1,'Usuario Admin','admin','y+klf/nPYRMlRwJa+VA0M+DQzIQB/Zb7p6LnWsYQjLU=','ADMIN'),(2,'Empleado Uno','empleado','Ephnm+FiaYxcXo8SjdvlYYX1+gKVwO2QP7VNKbf6A/E=','EMPLEADO');
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 
 --
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `habitacion`;
 CREATE TABLE `habitacion` (
   `idHABITACION` int NOT NULL AUTO_INCREMENT,
   `CAPACIDAD` int unsigned DEFAULT NULL,
-  `DESCRIPCION` varchar(45) DEFAULT NULL,
+  `DESCRIPCION` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `NOMBRE` varchar(45) DEFAULT NULL,
   `COSTONOCHE` double DEFAULT NULL,
   `IMAGEN` varchar(255) DEFAULT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE `habitacion` (
 --
 
 /*!40000 ALTER TABLE `habitacion` DISABLE KEYS */;
-INSERT INTO `habitacion` VALUES (8,3,'Muy bonita','Habitación 101',NULL,'../imagenes_habitaciones/1749857222_descargar.jpg',NULL),(9,1,'Muy bonita también','Habitación 102',NULL,'../imagenes_habitaciones/1749857435_descargar (1).jpg',NULL),(10,2,'Muy fea','Habitación 103',NULL,'../imagenes_habitaciones/1749857452_descargar (2).jpg',NULL),(11,10,'Muy horrible','Habitación 104',NULL,'../imagenes_habitaciones/1749857476_descargar (3).jpg',NULL),(12,9,'Muy sucia, qué asco','Habitación 105',NULL,'../imagenes_habitaciones/1749857509_descargar (4).jpg',NULL);
+INSERT INTO `habitacion` VALUES (8,3,'Disfruta de comodidad superior con vista panorámica, cama king y baño privado elegante.','Habitación 101',NULL,'imagenes_habitaciones/1749857222_descargar.jpg',NULL),(9,1,'Perfecta para compartir, equipada con dos camas individuales, aire acondicionado y Wi-Fi gratis.','Habitación 102',NULL,'imagenes_habitaciones/1749857435_descargar (1).jpg',NULL),(10,2,'Espaciosa y moderna, ideal para viajeros exigentes. Incluye zona de trabajo y minibar.','Habitación 103',NULL,'imagenes_habitaciones/1749857452_descargar (2).jpg',NULL),(11,10,'Perfecta para compartir, equipada con dos camas individuales, aire acondicionado y Wi-Fi gratis.','Habitación 104',NULL,'imagenes_habitaciones/1749857476_descargar (3).jpg',NULL),(12,9,'Disfruta de comodidad superior con vista panorámica, cama king y baño privado elegante.','Habitación 105',NULL,'imagenes_habitaciones/1749857509_descargar (4).jpg',NULL);
 /*!40000 ALTER TABLE `habitacion` ENABLE KEYS */;
 
 --
@@ -235,7 +235,7 @@ CREATE TABLE `pagos` (
 --
 
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (6,'2025-02-03 15:01:00',123123123,1,18,4,'../imagenes_pagos/1749857847_Factura-deee9d17357b444baac4daccd31e06a6.jpg','123123123');
+INSERT INTO `pagos` VALUES (6,'2025-02-03 15:01:00',123123123,1,18,4,'imagenes_pagos/1749857847_Factura.jpg','123123123');
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 
 --
@@ -368,4 +368,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-13 18:40:17
+-- Dump completed on 2025-06-28 18:16:30

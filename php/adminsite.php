@@ -1,10 +1,19 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'ADMIN') {
   header("Location: ../html/log-in.html");
   exit();
 }
+
 include '../config/conection.php';
 $conn = conectarDB();
 ?>
@@ -397,23 +406,83 @@ $conn = conectarDB();
     </div>
     <script src="../js/jquery-3.6.0.min.js"></script>
     <script>
+      function inicializarTablas() {
+        $('.data-table').DataTable({
+          dom: "<'row mb-3'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+          "<'row'<'col-sm-12'tr>>" +
+          "<'row mt-3'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>" +
+          "B",
+          buttons: [
+            {
+              extend: 'pdfHtml5',
+              className: 'buttons-pdf d-none',
+              exportOptions: {
+                columns: ':not(.no-export)'
+              }
+            },
+            {
+              extend: 'excelHtml5',
+              className: 'buttons-excel d-none',
+              exportOptions: {
+                columns: ':not(.no-export)'
+              }
+            },
+            {
+              extend: 'csvHtml5',
+              className: 'buttons-csv d-none',
+              exportOptions: {
+                columns: ':not(.no-export)'
+              }
+            }
+          ],
+          language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+          }
+        });
+      }
+
+
       function cargarContenido(section, id = null) {
-        if (!section) section = 'panel'; // sección por defecto
+        if (!section) section = 'panel';
         let url = `admin/${section}.php`;
         if (id) {
           url += `?id=${id}`;
         }
-
-        // Oculta todos los main excepto #contenido
+      
         $("main.mt-5.pt-3").addClass("d-none");
         $("#contenido").removeClass("d-none");
-
-        // Carga el contenido dinámico
-        $("#contenido").load(url, function() {
-          // Inicializa DataTables si hay tablas con la clase .data-table
-          if ($('.data-table').length) {
-            $('.data-table').DataTable();
-          }
+      
+        $("#contenido").load(url, function () {
+          // Esperar un poco para que todo el DOM cargado esté disponible
+          setTimeout(() => {
+            if ($.fn.DataTable.isDataTable('.data-table')) {
+              $('.data-table').DataTable().clear().destroy();
+            }
+          
+            inicializarTablas(); // <- esto llama a tu función personalizada de DataTable
+          
+            const botonExportar = document.getElementById('btn-exportar');
+            const tipoExportacion = document.getElementById('tipo-exportacion');
+          
+            if (botonExportar && tipoExportacion && $.fn.DataTable.isDataTable('.data-table')) {
+              const tabla = $('.data-table').DataTable();
+            
+              botonExportar.addEventListener('click', function () {
+                const tipo = tipoExportacion.value;
+                switch (tipo) {
+                  case 'pdf':
+                    tabla.button('.buttons-pdf').trigger();
+                    break;
+                  case 'excel':
+                    tabla.button('.buttons-excel').trigger();
+                    break;
+                  case 'csv':
+                    tabla.button('.buttons-csv').trigger();
+                    break;
+                }
+              });
+            }
+          }, 50); // Un pequeño retardo asegura que el DOM está listo
         });
       }
 
@@ -453,5 +522,12 @@ $conn = conectarDB();
     <script src="../js/adminsite.js"></script>
     <script src="../js/sweetalert2@11.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- DataTables Exportación -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   </body>
 </html>

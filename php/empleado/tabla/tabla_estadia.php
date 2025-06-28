@@ -1,4 +1,20 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'EMPLEADO') {
+  header("Location: ../html/log-in.html");
+  exit();
+}
+
 include_once '../../../config/conection.php';
 $conn = conectarDB();
 
@@ -28,7 +44,7 @@ $res1 = $conn->query($sql1);
                   <th>Fecha de Registro</th>
                   <th>Costo</th>
                   <th>ID de Habitación</th>
-                  <th>Acción<span class="invisible">....................</span></th>
+                  <th class="no-export">Acción<span class="invisible">....................</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -41,7 +57,7 @@ $res1 = $conn->query($sql1);
                          <td><?= $row['Costo']?></td>
                          <td><?= $row['Habitacion_idHabitacion']?></td>
                          <div class="d-flex justify-content-center gap-1">
-                             <td class="text-center ">
+                             <td class="text-center no-export">
                              <a href="?section=editar/editar_estadia&id=<?= $row['idEstadia'] ?>" class="btn btn-success">Editar</a>
                              </td>
                          </div>                        
@@ -56,7 +72,7 @@ $res1 = $conn->query($sql1);
                   <th>Fecha de Registro</th>
                   <th>Costo</th>
                   <th>ID de Habitación</th>
-                  <th>Acción</th>
+                  <th class="no-export">Acción</th>
                 </tr>
               </tfoot>
             </table>
@@ -65,4 +81,14 @@ $res1 = $conn->query($sql1);
       </div>
     </div>
   </div>
+</div>
+<div class="d-flex justify-content-end align-items-center gap-2 mb-3 mx-3">
+  <select id="tipo-exportacion" class="form-select w-auto">
+    <option value="pdf">PDF</option>
+    <option value="excel">Excel</option>
+    <option value="csv">CSV</option>
+  </select>
+  <button id="btn-exportar" class="btn btn-primary">
+    <i class="bi bi-download me-1"></i>Exportar
+  </button>
 </div>

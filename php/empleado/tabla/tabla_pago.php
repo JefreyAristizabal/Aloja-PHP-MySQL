@@ -1,4 +1,19 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'ADMIN') {
+  header("Location: ../html/log-in.html");
+  exit();
+}
+
 include_once '../../../config/conection.php';
 $conn = conectarDB();
 
@@ -30,7 +45,6 @@ $res7 = $conn->query($sql7);
                   <th>Nombre del Empleado</th>
                   <th>Imagen</th>
                   <th>Observación</th>
-                  <th>Acción<span class="invisible">.................</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -50,8 +64,16 @@ $res7 = $conn->query($sql7);
                          <td><?= $huesped['numero_documento']?></td>
                          <td><?= $row['Estadia_idEstadia']?></td>
                          <td><?= $empleado['Nombre_Completo']?></td>
-                         <td><?= $row['Imagen'] ?></td>
-                         <td><?= $row['Observacion'] ?></td>                    
+                          <td>
+                            <a href="#" 
+                               class="btn btn-link text-decoration-underline text-primary p-0" 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#imagenModal" 
+                               data-img="/php/<?= htmlspecialchars($row['Imagen']) ?>">
+                               Ver Imagen
+                            </a>
+                          </td>
+                         <td><?= $row['Observacion'] ?></td>                       
                      </tr>
                 <?php  endwhile; ?>
               </tbody>
@@ -65,13 +87,73 @@ $res7 = $conn->query($sql7);
                   <th>Nombre del Empleado</th>
                   <th>Imagen</th>
                   <th>Observación</th>
-                  <th>Acción</th>
                 </tr>
               </tfoot>
             </table>
+            <script>
+                function confirmarEliminacion(id) {
+                  Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡Esta acción no se puede deshacer!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar',
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      console.log("Redirigiendo a eliminar_tarifa.php?id=" + id);
+                      window.location.href = './eliminar/eliminar_pago.php?id=' + id; 
+                    } else {
+                      Swal.fire('Cancelado', 'La acción ha sido cancelada.', 'info');
+                    }
+                  });
+                }
+            </script>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- Modal para mostrar imagen -->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="imagenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imagenModalLabel">Imagen del Pago</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="imagenModalSrc" src="" class="img-fluid rounded" alt="Comprobante">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end align-items-center gap-2 mb-3 mx-3">
+  <select id="tipo-exportacion" class="form-select w-auto">
+    <option value="pdf">PDF</option>
+    <option value="excel">Excel</option>
+    <option value="csv">CSV</option>
+  </select>
+  <button id="btn-exportar" class="btn btn-primary">
+    <i class="bi bi-download me-1"></i>Exportar
+  </button>
+</div>
+<script>
+  const imagenModal = document.getElementById('imagenModal');
+
+  imagenModal.addEventListener('show.bs.modal', function (event) {
+    const triggerLink = event.relatedTarget;
+    const imageUrl = triggerLink.getAttribute('data-img');
+    const modalImg = document.getElementById('imagenModalSrc');
+
+    if (imageUrl && modalImg) {
+      modalImg.src = imageUrl;
+      console.log("Cargando imagen:", imageUrl);
+    } else {
+      console.warn("No se pudo cargar la imagen en el modal.");
+    }
+  });
+</script>
+
+

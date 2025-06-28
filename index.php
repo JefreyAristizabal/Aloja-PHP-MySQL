@@ -4,8 +4,19 @@ $conn = conectarDB();
 
 session_start();
 
-$sql = "SELECT * FROM HABITACION";
+if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+    $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
+    $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
+    $_SESSION['logged_in'] = true;
+    $_SESSION['idEmpleado'] = $_COOKIE['idEmpleado'] ?? '';
+    $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
+}
+
+$sql = "SELECT * FROM HABITACION ORDER BY idHABITACION DESC";
 $result = $conn->query($sql);
+
+$sql1 = "SELECT * FROM HABITACION";
+$result1 = $conn->query($sql1);
 ?>
 
 <!DOCTYPE html>
@@ -158,48 +169,31 @@ $result = $conn->query($sql);
       <div class="content">
         <h1>EXPLORA<br />RESERVA<br /><span>DISFRUTA</span></h1>
         <p>
-          Aloja conecta viajeros con anfitriones, ofreciendo alojamientos únicos,
-          seguros y accesibles en todo el mundo.
-          Con un sistema de reservas fácil y confiable,
-          te garantizamos una experiencia auténtica y cómoda en cada destino.
+          Aloja es una acogedora casa hotel que ofrece una experiencia cómoda, segura y accesible para todos los viajeros.
+          Ubicada en una zona estratégica, combina el confort del hogar con la atención personalizada de un alojamiento exclusivo.
+          Reserva de forma fácil y disfruta de un ambiente tranquilo, ideal para descansar y descubrir tu destino.
         </p>
-        <button class="btn-ini">Contáctanos Ahora</button>
+        <button class="btn-ini" onclick="location.href='#contactanos'">Contáctanos Ahora</button>
       </div>
 
       <div class="destination__grid">
+        <?php 
+        $contador = 0;
+        while ($row1 = $result1->fetch_assoc()): 
+          if($contador >= 3) break;?>
         <div class="destination__card">
-          <img src="img/destination/destination-1.jfif" alt="destination" />
+          <img src="/php/<?php echo htmlspecialchars($row1['IMAGEN']); ?>" alt="Habitación" />
           <div class="card__content">
-            <h4>Edificio Oasis</h4>
+            <h4><?php echo htmlspecialchars($row1['NOMBRE']); ?></h4>
             <p>
-              El Edificio Oasis en Medellín ofrece diseño moderno,
-              comodidad y una ubicación estratégica en la ciudad.
+              <?php echo htmlspecialchars($row1['DESCRIPCION']); ?>
             </p>
-            <button class="btn-ini">Ver Más</button>
+            <button class="btn-ini" onclick="location.href='#habitaciones'">Ver Más</button>
           </div>
         </div>
-        <div class="destination__card">
-          <img src="img/destination/destination-2.jpg" alt="destination" />
-          <div class="card__content">
-            <h4>Residencia Los Andes</h4>
-            <p>
-              Residencia Los Andes en Bogotá ofrece confort,
-              tranquilidad y una ubicación privilegiada en un entorno natural.
-            </p>
-            <button class="btn-ini">Ver Más</button>
-          </div>
-        </div>
-        <div class="destination__card">
-          <img src="img/destination/destination-3.jpg" alt="destination" />
-          <div class="card__content">
-            <h4>Hotel Caribe</h4>
-            <p>
-              El Hotel Caribe en Cartagena es un icónico hotel de lujo,
-              reconocido por su elegancia, historia y ubicación frente al mar.
-            </p>
-            <button class="btn-ini">Ver Más</button>
-          </div>
-        </div>
+        <?php 
+          $contador++;
+          endwhile; ?>
       </div>
     </div>
   </div>
@@ -398,23 +392,92 @@ $result = $conn->query($sql);
               </div>
               <div class="col-12">
                   <div class="owl-carousel slider_carousel">
-                      <?php while ($row = $result->fetch_assoc()): ?>
-                        <div class="card_box">
-                            <img class="img-fluid w-100" src="php/imagenes_habitaciones/<?php echo basename ($row['IMAGEN']); ?>" alt="Habitación">
-                            <div class="card_text">
-                                <h4><?php echo $row['NOMBRE']; ?></h4>
-                                <p>Capacidad: <?php echo $row['CAPACIDAD']; ?> Personas</p>
-                            </div>
-                        </div>
-                      <?php endwhile; ?>
+                  <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="card_box">
+                      <img class="img-fluid w-100" src="/php/<?php echo htmlspecialchars($row['IMAGEN']); ?>" alt="Habitación">
+                      <div class="card_text">
+                        <h4><?php echo htmlspecialchars($row['NOMBRE']); ?></h4>
+                        <p>Capacidad: <?php echo htmlspecialchars($row['CAPACIDAD']); ?> Personas</p>
+                        <?php
+                        $precioSeguro = isset($row['COSTONOCHE']) && is_numeric($row['COSTONOCHE'])
+                            ? number_format($row['COSTONOCHE'], 0, ',', '.')
+                            : '0';
+                        ?>
+                        <button class="btn btn-danger deep-red mt-2" onclick='abrirModalHabitacion(
+                          <?= json_encode($row['NOMBRE']) ?>,
+                          <?= json_encode($row['DESCRIPCION']) ?>,
+                          <?= json_encode($precioSeguro) ?>,
+                          <?= json_encode('/php/' . $row['IMAGEN']) ?>,
+                          <?= json_encode($row['CAPACIDAD']) ?>
+                        )'>Ver Detalles</button>
+
+                        <style>
+                          .btn.deep-red {
+                            background-color: #a00000 !important;
+                            border-color: #a00000 !important;
+                          }
+                        
+                          .btn.deep-red:hover {
+                            background-color: #870000 !important;
+                            border-color: #870000 !important;
+                          }
+                        </style>
+
+
+                      </div>
+                    </div>
+                  <?php endwhile; ?>
+
                   </div>
               </div>
           </div>
       </div>
     </div>
 
+    <div class="modal fade" id="habitacionModal" tabindex="-1" role="dialog" aria-labelledby="habitacionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-narrow" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="habitacionModalLabel">Nombre habitación</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+
+          </div>
+          <div class="modal-body">
+            <img id="imagenHabitacion" src="" class="img-fluid w-100 rounded mb-3 border border-danger" alt="Imagen habitación" style="object-fit: cover;">
+            <p><strong>Descripción:</strong> <span id="descHabitacion"></span></p>
+            <p><strong>Precio por noche:</strong><span id="precioHabitacion" style="display: none;"></span> Contáctanos para saber más</p>
+            <p><strong>Capacidad:</strong> <span id="capacidadHabitacion"></span> personas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .modal-narrow {
+        max-width: 400px;
+        width: 100%;
+      }
+    </style>
+
+
+
+    <script>
+      function abrirModalHabitacion(nombre, descripcion, precio, imagen, capacidad, estado) {
+        document.getElementById('habitacionModalLabel').textContent = nombre;
+        document.getElementById('descHabitacion').textContent = descripcion;
+        document.getElementById('precioHabitacion').textContent = precio;
+        document.getElementById('imagenHabitacion').src = imagen;
+        document.getElementById('capacidadHabitacion').textContent = capacidad;
+      
+        $('#habitacionModal').modal('show');
+      }
+    </script>
+
     <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script>
         
