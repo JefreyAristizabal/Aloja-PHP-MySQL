@@ -12,7 +12,11 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
     $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
 }
 
-$sql = "SELECT * FROM HABITACION ORDER BY idHABITACION DESC";
+$sql = "SELECT h.*, t.Valor AS PRECIO, t.Modalidad AS MODALIDAD
+        FROM HABITACION h 
+        LEFT JOIN TARIFA t ON h.idHABITACION = t.Habitacion_idHabitacion 
+        ORDER BY h.idHABITACION DESC";
+
 $result = $conn->query($sql);
 
 $sql1 = "SELECT * FROM HABITACION";
@@ -120,17 +124,16 @@ $result1 = $conn->query($sql1);
           <ul class="navbar-nav d-flex">
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle login" style="border-radius: 3rem !important;padding: 0.4rem !important;gap: 0 !important;"
-                     href="#"
-                     id="userDropdown"
-                     role="button"
-                     data-toggle="dropdown"
-                     aria-haspopup="true"
-                     aria-expanded="false">
+                    href="#"
+                    id="userDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
                       <span style="padding: 1.3rem !important;"><i class="ri-user-3-fill"></i></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                       <a class="dropdown-item" href="#">Perfil</a>
-                      <a class="dropdown-item" href="#">Cambiar contraseña</a>
+                      <a class="dropdown-item" href="../html/cambiar_contraseña.html">Cambiar contraseña</a>
 
                       <?php if ($_SESSION['rol'] == 'ADMIN'): ?>
                           <a class="dropdown-item" href="#" onclick="window.open('php/adminsite.php', '_self')">Interfaz de admin</a>
@@ -399,8 +402,8 @@ $result1 = $conn->query($sql1);
                         <h4><?php echo htmlspecialchars($row['NOMBRE']); ?></h4>
                         <p>Capacidad: <?php echo htmlspecialchars($row['CAPACIDAD']); ?> Personas</p>
                         <?php
-                        $precioSeguro = isset($row['COSTONOCHE']) && is_numeric($row['COSTONOCHE'])
-                            ? number_format($row['COSTONOCHE'], 0, ',', '.')
+                        $precioSeguro = isset($row['PRECIO']) && is_numeric($row['PRECIO'])
+                            ? number_format($row['PRECIO'], 0, ',', '.')
                             : '0';
                         ?>
                         <button class="btn btn-danger deep-red mt-2" onclick='abrirModalHabitacion(
@@ -408,7 +411,8 @@ $result1 = $conn->query($sql1);
                           <?= json_encode($row['DESCRIPCION']) ?>,
                           <?= json_encode($precioSeguro) ?>,
                           <?= json_encode('/php/' . $row['IMAGEN']) ?>,
-                          <?= json_encode($row['CAPACIDAD']) ?>
+                          <?= json_encode($row['CAPACIDAD']) ?>,
+                          <?= json_encode($row['MODALIDAD']) ?>
                         )'>Ver Detalles</button>
 
                         <style>
@@ -438,7 +442,7 @@ $result1 = $conn->query($sql1);
       <div class="modal-dialog modal-dialog-centered modal-narrow" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="habitacionModalLabel">Nombre habitación</h5>
+            <h5 class="modal-title" id="habitacionModalLabel" style="color: #920000;">Nombre habitación</h5>
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -446,10 +450,13 @@ $result1 = $conn->query($sql1);
 
           </div>
           <div class="modal-body">
-            <img id="imagenHabitacion" src="" class="img-fluid w-100 rounded mb-3 border border-danger" alt="Imagen habitación" style="object-fit: cover;">
-            <p><strong>Descripción:</strong> <span id="descHabitacion"></span></p>
-            <p><strong>Precio por noche:</strong><span id="precioHabitacion" style="display: none;"></span> Contáctanos para saber más</p>
-            <p><strong>Capacidad:</strong> <span id="capacidadHabitacion"></span> personas</p>
+            <img id="imagenHabitacion" src=""
+                 class="img-fluid w-100 rounded mb-3 border border-danger d-block"
+                 alt="Imagen habitación"
+                 style="object-fit: contain; height: auto; max-height: 400px;">
+            <p><strong style="color: #920000;">Descripción: </strong><span id="descHabitacion"></span></p>
+            <p><strong style="color: #920000;">Precio: </strong><span id="precioHabitacion"></span> Por <span id="modalidadHabitacion"></span></p>
+            <p><strong style="color: #920000;">Capacidad: </strong><span id="capacidadHabitacion"></span> personas</p>
           </div>
         </div>
       </div>
@@ -465,12 +472,13 @@ $result1 = $conn->query($sql1);
 
 
     <script>
-      function abrirModalHabitacion(nombre, descripcion, precio, imagen, capacidad, estado) {
+      function abrirModalHabitacion(nombre, descripcion, precio, imagen, capacidad, modalidad) {
         document.getElementById('habitacionModalLabel').textContent = nombre;
         document.getElementById('descHabitacion').textContent = descripcion;
         document.getElementById('precioHabitacion').textContent = precio;
         document.getElementById('imagenHabitacion').src = imagen;
         document.getElementById('capacidadHabitacion').textContent = capacidad;
+        document.getElementById('modalidadHabitacion').textContent = modalidad;
       
         $('#habitacionModal').modal('show');
       }

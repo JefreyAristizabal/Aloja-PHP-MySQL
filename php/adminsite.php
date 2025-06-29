@@ -82,7 +82,7 @@ $conn = conectarDB();
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
-                <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
+                <li><a class="dropdown-item" href="../html/cambiar_contraseña.html">Cambiar contraseña</a></li>
                 <li>
                   <a class="dropdown-item" href="auth/logout.php">Cerrar sesión</a>
                 </li>

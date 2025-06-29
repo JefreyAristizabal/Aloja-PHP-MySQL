@@ -5,17 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <title>Iniciar sesión | Aloja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <title>Recuperar contraseña | Aloja</title>
     <style>
       body {
         font-family: 'Poppins', sans-serif;
@@ -38,7 +30,6 @@
         color: #ffffff !important;
       }
 
-      /* Previene cambio de color en focus */
       input:focus {
         color: #ffffff !important;
       }
@@ -51,23 +42,14 @@
       <img src="../img/logo.png" alt="logo" class="max-w-[70px]" />
     </div>
 
-    <!-- Nav transparente superior -->
-    <nav class="absolute top-0 left-0 w-full flex items-center justify-center gap-4 p-8">
-    </nav>
-
-    <nav class="hidden sm:flex"></nav>
-
-    <!-- Formulario -->
+    <!-- Formulario recuperación -->
     <section class="relative max-w-md w-full bg-transparent border-2 border-white/50 rounded-2xl backdrop-blur-lg p-8 sm:mt-0 mt-24">
-
-      <form action="../php/auth/login.php" method="post" class="flex flex-col gap-4">
-        <h1 class="text-2xl text-white text-center font-semibold">Iniciar sesión</h1>
-      
-        <!-- Subtítulo personalizado -->
+      <form action="../php/auth/recuperar.php" method="post" class="flex flex-col gap-4">
+        <h1 class="text-2xl text-white text-center font-semibold">Recuperar contraseña</h1>
         <p class="text-white text-sm text-center mb-2">
-          Inicio de sesión exclusivo para el personal
+          Ingresa tu usuario y nombre completo
         </p>
-      
+
         <!-- Usuario -->
         <div class="relative mt-2">
           <input
@@ -88,64 +70,44 @@
           </label>
           <ion-icon name="person-outline" class="absolute right-2 top-5 text-white text-lg"></ion-icon>
         </div>
-      
-        <!-- Contraseña -->
+
+        <!-- Nombre completo -->
         <div class="relative mt-4">
           <input
-            type="password"
-            name="password"
-            id="password"
+            type="text"
+            name="nombre"
+            id="nombre"
             required
             placeholder=" "
             class="peer w-full h-14 bg-transparent border-b-2 border-white text-white text-base px-2 placeholder-transparent focus:outline-none"
           />
           <label
-            for="password"
+            for="nombre"
             class="absolute left-2 text-white text-sm top-[-10px] transition-all duration-300
                    peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:-translate-y-1/2
                    peer-focus:top-[-10px] peer-focus:text-sm peer-focus:-translate-y-0"
           >
-            Contraseña
+            Nombre completo
           </label>
-          <ion-icon name="lock-closed-outline" class="absolute right-2 top-5 text-white text-lg"></ion-icon>
-          <i
-            class="fa-solid fa-eye-slash toggle-password absolute right-10 top-1/2 transform -translate-y-1/2 cursor-pointer text-white"
-            id="togglePassword"
-          ></i>
+          <ion-icon name="person-circle-outline" class="absolute right-2 top-5 text-white text-lg"></ion-icon>
         </div>
-      
+
         <!-- Botón -->
         <button
           type="submit"
           class="w-full h-10 mt-6 rounded-full bg-white text-black font-semibold transition duration-300 hover:bg-white/50"
         >
-          Iniciar sesión
+          Recuperar
         </button>
 
-        <!-- Enlace para recuperar contraseña -->
-        <a href="recuperar.html" class="text-sm text-white text-center mt-3 hover:underline block">
-          ¿Olvidaste tu contraseña?
+        <a href="log-in.html" class="text-sm text-white text-center mt-3 hover:underline block">
+          ← Volver a iniciar sesión
         </a>
       </form>
-
-
-
     </section>
 
     <!-- Scripts -->
-    <script>
-      const togglePassword = document.getElementById('togglePassword');
-      const password = document.getElementById('password');
-
-      togglePassword.addEventListener('click', function () {
-        const isPassword = password.type === 'password';
-        password.type = isPassword ? 'text' : 'password';
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-      });
-    </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="../js/sing-up-in.js"></script>
   </body>
 </html>
