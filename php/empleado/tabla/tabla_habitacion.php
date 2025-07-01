@@ -88,7 +88,7 @@ $res5 = $conn->query($sql5);
 </div>
 <!-- Modal para mostrar imagen -->
 <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="imagenModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="imagenModalLabel">Imagen de la Habitación</h5>

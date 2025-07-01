@@ -9,7 +9,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
     $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
 }
 
-if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'ADMIN') {
   header("Location: ../html/log-in.html");
   exit();
 }
@@ -71,9 +71,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Cifrar la contraseña antes de guardar
     $encryptedPassword = encrypt_password($password, $key_hex);
 
-    $sql = "UPDATE empleado SET Nombre_Completo = ?, Usuario = ?, Password = ?, Rol = ? WHERE idEmpleado = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $empleado_nombre, $usuario, $encryptedPassword, $rol, $id);
+    if(empty($password)) {
+        // Si la contraseña está vacía, no la actualizamos
+        $sql = "UPDATE empleado SET Nombre_Completo = ?, Usuario = ?, Rol = ? WHERE idEmpleado = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssi", $empleado_nombre, $usuario, $rol, $id);
+    } else {
+        // Si hay una nueva contraseña, la ciframos y la actualizamos
+        $sql = "UPDATE empleado SET Nombre_Completo = ?, Usuario = ?, Password = ?, Rol = ? WHERE idEmpleado = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssi", $empleado_nombre, $usuario, $encryptedPassword, $rol, $id);
+    }
 
     if ($stmt->execute()) {
         echo "

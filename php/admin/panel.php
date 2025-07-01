@@ -38,6 +38,22 @@ $res6 = $conn->query($sql6);
 
 $sql7 = "SELECT * FROM pagos";
 $res7 = $conn->query($sql7);
+
+$nombreMes = date('F'); // Nombre del mes actual en inglés (puedes traducirlo si lo deseas)
+
+// Estadías totales y del mes
+$totalEstadias = $conn->query("SELECT COUNT(*) as total FROM estadia")->fetch_assoc()['total'];
+$estadiasMes = $conn->query("SELECT COUNT(*) as total FROM estadia WHERE MONTH(Fecha_Registro) = MONTH(CURRENT_DATE()) AND YEAR(Fecha_Registro) = YEAR(CURRENT_DATE())")->fetch_assoc()['total'];
+
+// Pagos totales y del mes
+$totalPagos = $conn->query("SELECT COUNT(*) as total FROM pagos")->fetch_assoc()['total'];
+$pagosMes = $conn->query("SELECT COUNT(*) as total FROM pagos WHERE MONTH(Fecha_Pago) = MONTH(CURRENT_DATE()) AND YEAR(Fecha_Pago) = YEAR(CURRENT_DATE())")->fetch_assoc()['total'];
+
+$fecha = new DateTime();
+$formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::LONG, IntlDateFormatter::NONE, null, null, 'LLLL');
+$nombreMes = ucfirst($formatter->format($fecha));
+
+
 ?>  
   <div class="container-fluid">
     <div class="row">
@@ -46,51 +62,71 @@ $res7 = $conn->query($sql7);
       </div>
     </div>
     <div class="row">
+
+      <!-- Estadías Totales -->
       <div class="col-md-3 mb-3">
-        <div class="card bg-primary text-white h-100">
-          <div class="card-body py-5">Agregar Huesped</div>
-          <div class="card-footer d-flex">
-            Agregar +
-            <span class="ms-auto">
-              <i class="bi bi-chevron-right"></i>
-            </span>
+        <div class="card bg-primary text-white h-100" style="min-height: 160px;">
+          <div class="card-body py-3">
+            <h6 class="card-title mb-3">Estadías Totales</h6>
+            <p class="card-text fs-4"><?= $totalEstadias ?></p>
+          </div>
+          <div class="card-footer text-center py-2">
+            <a href="?section=tabla/tabla_estadia" class="text-white text-decoration-none">
+              Ver Estadías <i class="bi bi-chevron-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
+
+      <!-- Estadías del mes actual -->
       <div class="col-md-3 mb-3">
-        <div class="card bg-warning text-dark h-100">
-          <div class="card-body py-5">Agregar Estadía</div>
-          <div class="card-footer d-flex">
-            Agregar +
-            <span class="ms-auto">
-              <i class="bi bi-chevron-right"></i>
-            </span>
+        <div class="card bg-info text-white h-100" style="min-height: 160px;">
+          <div class="card-body py-3">
+            <h6 class="card-title mb-3">Estadías en <?= $nombreMes ?></h6>
+            <p class="card-text fs-4"><?= $estadiasMes ?></p>
+          </div>
+          <div class="card-footer text-center py-2">
+            <a href="?section=tabla/tabla_estadia" class="text-white text-decoration-none">
+              Ver Estadías <i class="bi bi-chevron-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
+
+      <!-- Pagos Totales -->
       <div class="col-md-3 mb-3">
-        <div class="card bg-success text-white h-100">
-          <div class="card-body py-5">Editar Estadía</div>
-          <div class="card-footer d-flex">
-            Editar<i class="bi bi-pen px-2"></i>
-            <span class="ms-auto">
-              <i class="bi bi-chevron-right"></i>
-            </span>
+        <div class="card bg-success text-white h-100" style="min-height: 160px;">
+          <div class="card-body py-3">
+            <h6 class="card-title mb-3">Pagos Totales</h6>
+            <p class="card-text fs-4"><?= $totalPagos ?></p>
+          </div>
+          <div class="card-footer text-center py-2">
+            <a href="?section=tabla/tabla_pago" class="text-white text-decoration-none">
+              Ver Pagos <i class="bi bi-chevron-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
+
+      <!-- Pagos del mes actual -->
       <div class="col-md-3 mb-3">
-        <div class="card bg-danger text-white h-100">
-          <div class="card-body py-5">Cancelar Estadía</div>
-          <div class="card-footer d-flex">
-            Cancelar -
-            <span class="ms-auto">
-              <i class="bi bi-chevron-right"></i>
-            </span>
+        <div class="card bg-warning text-dark h-100" style="min-height: 160px;">
+          <div class="card-body py-3">
+            <h6 class="card-title mb-3">Pagos en <?= $nombreMes ?></h6>
+            <p class="card-text fs-4"><?= $pagosMes ?></p>
+          </div>
+          <div class="card-footer text-center py-2">
+            <a href="?section=tabla/tabla_pago" class="text-white text-decoration-none">
+              Ver Pagos <i class="bi bi-chevron-right ms-1"></i>
+            </a>
           </div>
         </div>
       </div>
+
     </div>
+
+
+
     <div class="row">
       <div class="col-md-12 mb-3">
         <div class="card">
@@ -234,7 +270,15 @@ $res7 = $conn->query($sql7);
                            <td><?= $row['NOMBRE']?></td>
                            <td><?= $row['CAPACIDAD']?></td>
                            <td><?= $row['DESCRIPCION']?></td>
-                           <td><?= $row['IMAGEN']?></td>                       
+                          <td>
+                            <a href="#" 
+                               class="btn btn-link text-decoration-underline text-primary p-0" 
+                               data-bs-toggle="modal" 
+                               data-bs-target="#imagenModal" 
+                               data-img="/php/<?= htmlspecialchars($row['IMAGEN']) ?>">
+                               Ver Imagen
+                            </a>
+                          </td>                      
                        </tr>
 
                   <?php  endwhile; ?>
@@ -303,3 +347,43 @@ $res7 = $conn->query($sql7);
       </div>
     </div>
   </div>
+  <!-- Modal para mostrar imagen -->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="imagenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imagenModalLabel">Imagen de la Habitación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="imagenModalSrc" src="" class="img-fluid rounded" alt="Comprobante">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end align-items-center gap-2 mb-3 mx-3">
+  <select id="tipo-exportacion" class="form-select w-auto">
+    <option value="pdf">PDF</option>
+    <option value="excel">Excel</option>
+    <option value="csv">CSV</option>
+  </select>
+  <button id="btn-exportar" class="btn btn-primary">
+    <i class="bi bi-download me-1"></i>Exportar
+  </button>
+</div>
+<script>
+  const imagenModal = document.getElementById('imagenModal');
+
+  imagenModal.addEventListener('show.bs.modal', function (event) {
+    const triggerLink = event.relatedTarget;
+    const imageUrl = triggerLink.getAttribute('data-img');
+    const modalImg = document.getElementById('imagenModalSrc');
+
+    if (imageUrl && modalImg) {
+      modalImg.src = imageUrl;
+      console.log("Cargando imagen:", imageUrl);
+    } else {
+      console.warn("No se pudo cargar la imagen en el modal.");
+    }
+  });
+</script>

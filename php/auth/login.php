@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text: 'Usuario o contraseña incorrectos',
             confirmButtonColor: '#d33'
           }).then(() => {
-            window.location.href = '../html/log-in.html';
+            window.location.href = '../../html/log-in.html';
           });
         </script>
     </body>

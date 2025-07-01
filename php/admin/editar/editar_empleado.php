@@ -59,7 +59,7 @@ if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'
             </div>
 
             <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
+              <label for="password" class="form-label">Contraseña (Dejar vacío para no cambiar)</label>
               <div class="position-relative">
                 <input type="password" class="form-control pe-5" id="password" name="password" value="" required>
                 <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 px-4" id="togglePassword" style="cursor: pointer;"></i>
