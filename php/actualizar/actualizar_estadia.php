@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+if (!isset($_SESSION['logged_in']) || isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
     $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
     $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
     $_SESSION['logged_in'] = true;
@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
 }
 
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-  header("Location: ../html/log-in.html");
+  header("Location: ../../html/log-in.html");
   exit();
 }
 
@@ -21,11 +21,74 @@ $conn = conectarDB();
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
+    $id = trim($_POST['id']);
     $fechaInicio = $_POST['fechaInicio_estadia'];
     $fechaFin = $_POST['fechaFin_estadia'];
-    $costo = $_POST['costo_estadia'];
-    $idHabitacion = $_POST['id_habitacion_estadia'];
+    $costo = trim($_POST['costo_estadia']);
+    $idHabitacion = trim($_POST['id_habitacion_estadia']);
+
+    if (empty($fechaInicio) || empty($fechaFin) || empty($costo) || empty($idHabitacion)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+
+    // Validar si las fechas se superponen con otra estadía en la misma habitación
+    $sql_check = "SELECT COUNT(*) FROM estadia 
+                  WHERE Habitacion_idHabitacion = ? 
+                  AND idEstadia != ? 
+                  AND (
+                        (Fecha_Inicio <= ? AND Fecha_Fin >= ?) OR
+                        (Fecha_Inicio <= ? AND Fecha_Fin >= ?) OR
+                        (Fecha_Inicio >= ? AND Fecha_Fin <= ?)
+                  )";
+    $stmt_check = $conn->prepare($sql_check);
+    $stmt_check->bind_param("issssss", $idHabitacion, $id, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin, $fechaInicio, $fechaFin);
+    $stmt_check->execute();
+    $stmt_check->bind_result($count);
+    $stmt_check->fetch();
+    $stmt_check->close();
+    if ($count > 0) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de superposición',
+                    text: 'Las fechas seleccionadas ya están ocupadas por otra estadía en la misma habitación.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
 
     try {
         $sql = "UPDATE estadia SET Fecha_Inicio = ?, Fecha_Fin = ?, Costo = ?, Habitacion_idHabitacion = ? WHERE idEstadia = ?";

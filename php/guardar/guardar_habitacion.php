@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+if (!isset($_SESSION['logged_in']) || isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
     $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
     $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
     $_SESSION['logged_in'] = true;
@@ -9,17 +9,41 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
     $_SESSION['nombre_completo'] = $_COOKIE['nombre_completo'] ?? '';
 }
 
-if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-  header("Location: ../html/log-in.html");
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'ADMIN') {
+  header("Location: ../../html/log-in.html");
   exit();
 }
 
 include '../../config/conection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre_habitacion = $_POST['nombre_habitacion'];
-    $capacidad = $_POST['capacidad'];
-    $descripcion_habitacion = $_POST['descripcion_habitacion'];
+    $nombre_habitacion = trim($_POST['nombre_habitacion']);
+    $capacidad = trim($_POST['capacidad']);
+    $descripcion_habitacion = trim($_POST['descripcion_habitacion']);
+
+    if( empty($nombre_habitacion) || empty($capacidad) || empty($descripcion_habitacion) || !isset($_FILES['imagen'])) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
 
     $carpetaDestino = "imagenes_habitaciones/";
 

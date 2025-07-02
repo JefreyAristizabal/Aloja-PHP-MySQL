@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+if (!isset($_SESSION['logged_in']) || isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
     $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
     $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
     $_SESSION['logged_in'] = true;
@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
 }
 
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-  header("Location: ../html/log-in.html");
+  header("Location: ../../html/log-in.html");
   exit();
 }
 
@@ -21,9 +21,30 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $conn = conectarDB();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    $descripcion_novedad = $_POST['descripcion_novedad'];
-    $id_estadia_novedad = $_POST['id_estadia_novedad'];
+    $id = trim($_POST['id']);
+    $descripcion_novedad = trim($_POST['descripcion_novedad']);
+    $id_estadia_novedad = trim($_POST['id_estadia_novedad']);
+
+    if (empty($id) || empty($descripcion_novedad) || empty($id_estadia_novedad)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset='UTF-8'><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
 
     try {
         $sql = "UPDATE novedades 

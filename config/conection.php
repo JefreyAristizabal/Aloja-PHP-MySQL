@@ -1,6 +1,6 @@
 <?php
 function conectarDB() {
-    $host = "localhost"; 
+    $host = "localhost:3306"; 
     $user = "root"; 
     $password = ""; 
     $database = "adminaloja"; 

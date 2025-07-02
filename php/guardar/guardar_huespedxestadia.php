@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+if (!isset($_SESSION['logged_in']) || isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
     $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
     $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
     $_SESSION['logged_in'] = true;
@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
 }
 
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-  header("Location: ../html/log-in.html");
+  header("Location: ../../html/log-in.html");
   exit();
 }
 
@@ -21,8 +21,32 @@ $conn = conectarDB();
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_huesped = $_POST['id_huesped'];
-    $id_estadia = $_POST['id_estadia'];
+    $id_huesped = trim($_POST['id_huesped']);
+    $id_estadia = trim($_POST['id_estadia']);
+
+    if( empty($id_huesped) || empty($id_estadia)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
     $huespedes = $conn->query("SELECT idHUESPED FROM huesped WHERE numero_documento = '$id_huesped'");
     $huesped = $huespedes->fetch_assoc();
     if (!$huesped) {

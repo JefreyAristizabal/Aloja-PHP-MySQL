@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+if (!isset($_SESSION['logged_in']) || isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
     $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
     $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
     $_SESSION['logged_in'] = true;
@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
 }
 
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-  header("Location: ../html/log-in.html");
+  header("Location: ../../html/log-in.html");
   exit();
 }
 
@@ -21,11 +21,32 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_pago = $_POST['fecha_pago'];
-    $valor_pago = $_POST['valor_pago'];
-    $id_huesped_pago = $_POST['id_huesped_pago'];
-    $id_estadia_pago = $_POST['id_estadia_pago'];
+    $valor_pago = trim($_POST['valor_pago']);
+    $id_huesped_pago = trim($_POST['id_huesped_pago']);
+    $id_estadia_pago = trim($_POST['id_estadia_pago']);
     $id_empleado_pago = $_POST['id_empleado_pago'];
-    $observacion = $_POST['observacion'];
+    $observacion = trim($_POST['observacion']);
+
+    if( empty($fecha_pago) || empty($valor_pago) || empty($id_huesped_pago) || empty($id_estadia_pago) || empty($id_empleado_pago)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset='UTF-8'><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
 
     $carpetaDestino = "imagenes_pagos/";
 

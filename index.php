@@ -221,9 +221,9 @@ $result1 = $conn->query($sql1);
             They understood our brand and created a stunning website design.
             Professional, responsive, and on-time delivery. Highly recommended!
           </p>
-          <img src="img/reviews/user-1.jpg" alt="user" />
-          <h5>Allan Collins</h5>
-          <h6>Managing Director</h6>
+          <img src="img/reviews/user-1.avif" alt="user" />
+          <h5>Pikachu</h5>
+          <h6>CEO de Apple y creador de la bomba átomica</h6>
         </div>
         <div class="section__card">
           <span><i class="ri-double-quotes-l"></i></span>
@@ -457,6 +457,7 @@ $result1 = $conn->query($sql1);
             <p><strong style="color: #920000;">Descripción: </strong><span id="descHabitacion"></span></p>
             <p><strong style="color: #920000;">Precio: </strong><span id="precioHabitacion"></span> Por <span id="modalidadHabitacion"></span></p>
             <p><strong style="color: #920000;">Capacidad: </strong><span id="capacidadHabitacion"></span> personas</p>
+            <p>Contáctanos para saber más</p>
           </div>
         </div>
       </div>

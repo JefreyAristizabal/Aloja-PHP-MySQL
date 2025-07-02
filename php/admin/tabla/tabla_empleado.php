@@ -11,7 +11,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
 }
 
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'ADMIN') {
-  header("Location: ../html/log-in.html");
+  header("Location: ../../../html/log-in.html");
   exit();
 }
 
@@ -51,7 +51,7 @@ $res4 = $conn->query($sql4);
                          <td><?=  $row['idEmpleado']?></td>
                          <td><?= $row['Nombre_Completo']?></td>
                          <td><?= $row['Usuario']?></td>
-                         <td>(Cifrada, sólo se puede recuperar agregando o editando el empleado)</td>
+                         <td>(Cifrada :D)</td>
                          <td><?= $row['Rol']?></td>
                          <div class="d-flex justify-content-center gap-1">
                              <td class="text-center no-export">

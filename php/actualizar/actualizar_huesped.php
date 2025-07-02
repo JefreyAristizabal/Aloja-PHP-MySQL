@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+if (!isset($_SESSION['logged_in']) || isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
     $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
     $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
     $_SESSION['logged_in'] = true;
@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
 }
 
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
-  header("Location: ../html/log-in.html");
+  header("Location: ../../html/log-in.html");
   exit();
 }
 
@@ -18,16 +18,40 @@ include '../../config/conection.php';
 $conn = conectarDB();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    $nombre_huesped = $_POST['nombre_huesped'];
-    $tipodocumento = $_POST['tipodocumento'];
-    $numero_documento_huesped = $_POST['numero_documento_huesped'];
-    $telefono_huesped = $_POST['telefono_huesped'];
-    $ciudad_huesped = $_POST['ciudad_huesped'];
-    $nombre_contacto_huesped = $_POST['nombre_contacto_huesped'];
-    $telefono_contacto_huesped = $_POST['telefono_contacto_huesped'];
-    $observaciones_huesped = $_POST['observaciones_huesped'];
-    $otras_observaciones_huesped = $_POST['otras_observaciones_huesped'];
+    $id = trim($_POST['id']);
+    $nombre_huesped = trim($_POST['nombre_huesped']);
+    $tipodocumento = trim($_POST['tipodocumento']);
+    $numero_documento_huesped = trim($_POST['numero_documento_huesped']);
+    $telefono_huesped = trim($_POST['telefono_huesped']);
+    $ciudad_huesped = trim($_POST['ciudad_huesped']);
+    $nombre_contacto_huesped = trim($_POST['nombre_contacto_huesped']);
+    $telefono_contacto_huesped = trim($_POST['telefono_contacto_huesped']);
+    $observaciones_huesped = trim($_POST['observaciones_huesped']);
+    $otras_observaciones_huesped = trim($_POST['otras_observaciones_huesped']);
+
+    if (empty($id) || empty($nombre_huesped) || empty($tipodocumento) || empty($numero_documento_huesped) || empty($telefono_huesped) || empty($ciudad_huesped) || empty($nombre_contacto_huesped) || empty($telefono_contacto_huesped) || empty($observaciones_huesped) || empty($otras_observaciones_huesped)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
 
     // Validar si ya existe un huesped con el mismo número de documento
     $sql_check = "SELECT idHUESPED FROM huesped WHERE numero_documento = ? AND idHUESPED != ?";

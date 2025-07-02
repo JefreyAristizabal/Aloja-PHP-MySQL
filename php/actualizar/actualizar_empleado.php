@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
+if (!isset($_SESSION['logged_in']) || isset($_COOKIE['logged_in']) && $_COOKIE['logged_in']) {
     $_SESSION['usuario'] = $_COOKIE['usuario'] ?? '';
     $_SESSION['rol'] = $_COOKIE['rol'] ?? '';
     $_SESSION['logged_in'] = true;
@@ -10,7 +10,7 @@ if (!isset($_SESSION['logged_in']) && isset($_COOKIE['logged_in']) && $_COOKIE['
 }
 
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || $_SESSION['rol'] !== 'ADMIN') {
-  header("Location: ../html/log-in.html");
+  header("Location: ../../html/log-in.html");
   exit();
 }
 
@@ -28,11 +28,35 @@ function encrypt_password($password, $key_hex) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    $empleado_nombre = $_POST['empleado_nombre'];
-    $usuario = $_POST['usuario'];
-    $password = $_POST['password'];
-    $rol = $_POST['rol'];
+    $id = trim($_POST['id']);
+    $empleado_nombre = trim($_POST['empleado_nombre']);
+    $usuario = trim($_POST['usuario']);
+    $password = trim($_POST['password']);
+    $rol = trim($_POST['rol']);
+
+    if (empty($empleado_nombre) || empty($usuario) || empty($password) || empty($rol)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
 
     // Verificar usuario duplicado excepto este
     $sql_check = "SELECT idEmpleado FROM empleado WHERE Usuario = ? AND idEmpleado != ?";
