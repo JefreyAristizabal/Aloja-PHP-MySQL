@@ -148,21 +148,6 @@ $res7 = $conn->query($sql7);
     <i class="bi bi-download me-1"></i>Exportar
   </button>
 </div>
-<script>
-  const imagenModal = document.getElementById('imagenModal');
 
-  imagenModal.addEventListener('show.bs.modal', function (event) {
-    const triggerLink = event.relatedTarget;
-    const imageUrl = triggerLink.getAttribute('data-img');
-    const modalImg = document.getElementById('imagenModalSrc');
-
-    if (imageUrl && modalImg) {
-      modalImg.src = imageUrl;
-      console.log("Cargando imagen:", imageUrl);
-    } else {
-      console.warn("No se pudo cargar la imagen en el modal.");
-    }
-  });
-</script>
 
 

@@ -515,6 +515,32 @@ $conn = conectarDB();
         };
       });
     </script>
+<script>
+document.addEventListener('click', function (event) {
+  const trigger = event.target.closest('[data-bs-toggle="modal"][data-bs-target="#imagenModal"]');
+  if (!trigger) return;
+
+  const imageUrl = trigger.getAttribute('data-img');
+  const modalImg = document.getElementById('imagenModalSrc');
+
+  if (imageUrl && modalImg) {
+    modalImg.src = imageUrl;
+    console.log("Imagen cargada:", imageUrl);
+  } else {
+    console.warn("No se pudo cargar la imagen.");
+  }
+});
+
+// Opcional: limpiar la imagen al cerrar el modal
+document.addEventListener('hidden.bs.modal', function (event) {
+  if (event.target.id === 'imagenModal') {
+    const modalImg = document.getElementById('imagenModalSrc');
+    if (modalImg) modalImg.src = '';
+  }
+});
+</script>
+
+
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/jquery-3.5.1.js"></script>
     <script src="../js/jquery.dataTables.min.js"></script>

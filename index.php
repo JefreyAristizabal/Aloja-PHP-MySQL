@@ -43,6 +43,7 @@ $result1 = $conn->query($sql1);
   <link href="css/fontawesome.min.css" rel="stylesheet" type="text/css" />
   <link href="css/owl.carousel.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
   <style>
     .nav-link.login:hover,
     .nav-link.login:focus {
