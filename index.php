@@ -168,7 +168,7 @@ $result1 = $conn->query($sql1);
         <span><i class="ri-twitter-fill"></i></span>
         <span><i class="ri-facebook-fill"></i></span>
         <span><i class="ri-instagram-line"></i></span>
-        <span><i class="ri-youtube-fill"></i></span>
+        <span><i class="ri-whatsapp-fill" onclick="abrirWhatsApp('+573185173933')" style="cursor: pointer;"></i></span>
       </div>
       <div class="content">
         <h1>EXPLORA<br />RESERVA<br /><span>DISFRUTA</span></h1>
@@ -572,7 +572,7 @@ $result1 = $conn->query($sql1);
         <div class="social-icons-footer">
           <i class="fa-brands fa-facebook-f"></i>
           <i class="fa-brands fa-twitter"></i>
-          <i class="fa-brands fa-whatsapp"></i>
+          <i class="fa-brands fa-whatsapp" onclick="abrirWhatsApp('+573185173933')"></i>
           <i class="fa-brands fa-instagram"></i>
         </div>
       </div>
@@ -599,6 +599,27 @@ $result1 = $conn->query($sql1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
+  <script>
+    function abrirWhatsApp(numero) {
+        // Limpiamos el número: quitamos espacios, guiones, paréntesis, etc.
+        numero = numero.replace(/\D/g, '');
+    
+        // Mensaje predefinido opcional (puedes personalizarlo)
+        const mensaje = encodeURIComponent("Hola, necesito información.");
+    
+        // Detectamos si el usuario está en un dispositivo móvil
+        const esMovil = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    
+        // Creamos el enlace correcto para cada caso
+        const enlace = esMovil
+            ? `whatsapp://send?phone=${numero}&text=${mensaje}`
+            : `https://web.whatsapp.com/send?phone=${numero}&text=${mensaje}`;
+    
+        // Redirigimos al enlace
+        window.location.href = enlace;
+    }
+  </script>
+
 </body>
 
 </html>

@@ -50,6 +50,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    //verificar si el costo es un número válido
+    if (!is_numeric($costo_estadia) || $costo_estadia <= 0) {
+        echo "        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Costo inválido',
+                    text: 'El costo debe ser un número positivo.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+
     // Validar si las fechas se superponen con otra estadía en la misma habitación
     $sql_check = "SELECT COUNT(*) FROM estadia 
                   WHERE Habitacion_idHabitacion = ? 

@@ -71,7 +71,8 @@ $conn = conectarDB();
             </div>
           </form>
           <ul class="navbar-nav">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown d-flex align-items-center">
+              <span class="navbar-text text-white">Admin</span>
               <a
                 class="nav-link dropdown-toggle ms-2 text-white"
                 href="#"
@@ -159,7 +160,7 @@ $conn = conectarDB();
                 href="#layouts-2"
               >
                 <span class="me-2"><i class="bi bi-person"></i></span>
-                <span>Huespedes</span>
+                <span>Huéspedes</span>
                 <span class="ms-auto">
                   <span class="right-icon">
                     <i class="bi bi-chevron-down"></i>
@@ -173,13 +174,13 @@ $conn = conectarDB();
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
-                      <span>Tabla de Huespedes</span>
+                      <span>Tabla de Huéspedes</span>
                     </a>
                   </li>
                   <li>
                     <a href="?section=agregar/agregar_huesped" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
-                      <span>Agregar Huesped</span>
+                      <span>Agregar Huésped</span>
                     </a>
                   </li>
                 </ul>
@@ -192,7 +193,7 @@ $conn = conectarDB();
                 href="#layouts-7"
               >
                 <span class="me-2"><i class="bi bi-file-earmark-spreadsheet"></i></span>
-                <span>Huesped x Estadía</span>
+                <span>Huésped x Estadía</span>
                 <span class="ms-auto">
                   <span class="right-icon">
                     <i class="bi bi-chevron-down"></i>
@@ -206,13 +207,13 @@ $conn = conectarDB();
                       <span class="me-2"
                         ><i class="bi bi-table"></i
                       ></span>
-                      <span>Tabla de Huesped x Estadía</span>
+                      <span>Tabla de Huésped x Estadía</span>
                     </a>
                   </li>
                   <li>
                     <a href="?section=agregar/agregar_huespedxestadia" class="nav-link px-3 text-white">
                       <span class="me-2"><i class="bi bi-plus"></i></span>
-                      <span>Agregar Huesped x Estadía</span>
+                      <span>Agregar Huésped x Estadía</span>
                     </a>
                   </li>
                 </ul>

@@ -48,6 +48,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Validar el formato del valor de la tarifa
+    if (!is_numeric($valor_tarifa) || $valor_tarifa <= 0) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset='UTF-8'><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Valor de tarifa inválido',
+                    text: 'El valor de la tarifa debe ser un número positivo.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+
     try {
         $sql = "UPDATE tarifa 
                 SET Modalidad = ?, NroHuespedes = ?, Valor = ?, Habitacion_idHabitacion = ? 

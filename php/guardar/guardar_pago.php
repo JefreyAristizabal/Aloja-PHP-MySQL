@@ -48,6 +48,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Validar el formato del valor del pago
+    if (!is_numeric($valor_pago) || $valor_pago <= 0) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset='UTF-8'><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Valor inválido',
+                    text: 'El valor del pago debe ser un número positivo.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+    
+
     $carpetaDestino = "imagenes_pagos/";
 
     if (!is_dir($carpetaDestino)) {
@@ -86,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombreImagenFinal = time() . "_" . basename($imagenNombre);
         $rutaImagen = $carpetaDestino . $nombreImagenFinal;
     
-        if (!move_uploaded_file($imagenTmp, $rutaImagen)) {
+        if (!move_uploaded_file($imagenTmp, "../" . $rutaImagen)) {
             echo "
             <!DOCTYPE html>
         <html>

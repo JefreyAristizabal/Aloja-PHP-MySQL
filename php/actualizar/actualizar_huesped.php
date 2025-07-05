@@ -53,6 +53,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Validar el formato del número de documento
+    if (!preg_match('/^\d{6,15}$/', $numero_documento_huesped)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Número de documento inválido',
+                    text: 'El número de documento debe tener entre 6 y 15 dígitos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+
+    // Validar el formato del número de teléfono
+    if (!preg_match('/^\d{5,15}$/', $telefono_huesped)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Número de teléfono inválido',
+                    text: 'El número de teléfono debe tener entre 5 y 15 dígitos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+
+    // Validar el formato del número de teléfono de contacto
+    if (!preg_match('/^\d{5,15}$/', $telefono_contacto_huesped)) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Número de teléfono de contacto inválido',
+                    text: 'El número de teléfono de contacto debe tener entre 5 y 15 dígitos.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+
     // Validar si ya existe un huesped con el mismo número de documento
     $sql_check = "SELECT idHUESPED FROM huesped WHERE numero_documento = ? AND idHUESPED != ?";
     $stmt_check = $conn->prepare($sql_check);

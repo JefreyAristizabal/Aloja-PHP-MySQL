@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombreImagenFinal = time() . "_" . basename($imagenNombre);
     $rutaImagen = $carpetaDestino . $nombreImagenFinal;
 
-    if (move_uploaded_file($imagenTmp, $rutaImagen)) {
+    if (move_uploaded_file($imagenTmp, "../" . $rutaImagen)) {
         $conn = conectarDB();
         $sql = "INSERT INTO HABITACION (NOMBRE, CAPACIDAD, DESCRIPCION, IMAGEN) VALUES (?, ?, ?, ?)";
         

@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
         $nombreImagenFinal = time() . "_" . basename($imagenNombre);
         $rutaImagen = $carpeta . $nombreImagenFinal;
-        move_uploaded_file($imagenTmp, $rutaImagen);
+        move_uploaded_file($imagenTmp, "../" . $rutaImagen);
 
         // Paso 3: Eliminar la imagen anterior si existe
         if (!empty($imagenAnterior) && file_exists($imagenAnterior)) {

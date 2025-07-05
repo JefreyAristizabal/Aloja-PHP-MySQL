@@ -50,6 +50,28 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         exit();
     }
 
+    // Validar el formato del valor del pago
+    if (!is_numeric($valor_pago) || $valor_pago <= 0) {
+        echo "
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset='UTF-8'><script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script></head>
+        <body>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Valor de pago inválido',
+                    text: 'El valor del pago debe ser un número positivo.',
+                    confirmButtonText: 'Volver'
+                }).then(() => {
+                    window.history.back();
+                });
+            </script>
+        </body>
+        </html>";
+        exit();
+    }
+
     $rutaImagen = null;
 
     try {
@@ -97,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
             $nombreImagenFinal = time() . "_" . basename($imagenNombre);
             $rutaImagen = $carpeta . $nombreImagenFinal;
-            move_uploaded_file($imagenTmp, $rutaImagen);
+            move_uploaded_file($imagenTmp, "../" . $rutaImagen);
 
             // Eliminar imagen anterior
             if (!empty($imagenAnterior) && file_exists($imagenAnterior)) {
